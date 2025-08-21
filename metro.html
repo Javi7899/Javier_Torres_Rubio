@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro de Aprendizaje - Javier Torres Rubio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a56db;
+            --secondary-color: #0c4a6e;
+            --accent-color: #7e22ce;
+            --finance-color: #22c55e;
+            --programming-color: #3b82f6;
+            --math-color: #f59e0b;
+            --economics-color: #ef4444;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --card-bg: rgba(30, 41, 59, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+            padding: 2rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .metro-map {
+            position: relative;
+            width: 100%;
+            min-height: 600px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .metro-line {
+            position: absolute;
+            width: 8px;
+            transform-origin: top left;
+        }
+
+        .line-finance {
+            background-color: var(--finance-color);
+            height: 500px;
+            top: 100px;
+            left: 20%;
+        }
+
+        .line-programming {
+            background-color: var(--programming-color);
+            height: 550px;
+            top: 80px;
+            left: 40%;
+            transform: rotate(5deg);
+        }
+
+        .line-math {
+            background-color: var(--math-color);
+            height: 600px;
+            top: 70px;
+            left: 60%;
+            transform: rotate(-3deg);
+        }
+
+        .line-economics {
+            background-color: var(--economics-color);
+            height: 480px;
+            top: 110px;
+            left: 80%;
+            transform: rotate(2deg);
+        }
+
+        .station {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 3px currentColor;
+            z-index: 10;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .station:hover {
+            transform: scale(1.2);
+        }
+
+        .station.finance { background-color: var(--finance-color); }
+        .station.programming { background-color: var(--programming-color); }
+        .station.math { background-color: var(--math-color); }
+        .station.economics { background-color: var(--economics-color); }
+
+        .station-label {
+            position: absolute;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            background: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 20;
+        }
+
+        .station:hover .station-label {
+            opacity: 1;
+        }
+
+        .station-connection {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--dark-color);
+            z-index: 5;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .legend-text {
+            font-weight: 500;
+        }
+
+        .station-details {
+            position: fixed;
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
+            background: var(--card-bg);
+            border-radius: 16px 16px 0 0;
+            padding: 1.5rem;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            transition: bottom 0.4s ease;
+        }
+
+        .station-details.active {
+            bottom: 0;
+        }
+
+        .close-details {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .details-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .details-type {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .details-description {
+            margin-bottom: 1rem;
+        }
+
+        .details-date {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--card-bg);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 90;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .metro-map {
+                padding: 1rem;
+                min-height: 500px;
+            }
+            
+            .station-label {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.4rem;
+            }
+            
+            .legend {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Metro del Conocimiento</h1>
+            <p class="subtitle">Trayectoria de aprendizaje de Javier Torres Rubio</p>
+        </header>
+        
+        <div class="metro-map" id="metro-map">
+            <!-- Las líneas y estaciones se generarán con JavaScript -->
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: var(--finance-color);"></div>
+                <span class="legend-text">Finanzas y Risk Modeling</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: var(--programming-color);"></div>
+                <span class="legend-text">Programación y Tecnología</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: var(--math-color);"></div>
+                <span class="legend-text">Matemáticas y Estadística</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: var(--economics-color);"></div>
+                <span class="legend-text">Economía y Negocios</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="station-details" id="station-details">
+        <button class="close-details" id="close-details">&times;</button>
+        <h2 class="details-title" id="details-title">Título de la estación</h2>
+        <span class="details-type" id="details-type">Tipo</span>
+        <p class="details-description" id="details-description">Descripción de la estación.</p>
+        <p class="details-date" id="details-date">Fecha</p>
+    </div>
+    
+    <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        // Datos para el mapa del metro
+        const metroData = {
+            lines: [
+                {
+                    id: "finance",
+                    name: "Finanzas y Risk Modeling",
+                    color: "var(--finance-color)",
+                    stations: [
+                        {
+                            id: "finance-1",
+                            name: "Grado Economía Financiera",
+                            description: "Formación base en principios económicos y financieros, sentando las bases para el análisis de riesgos.",
+                            date: "2020-2024",
+                            type: "Educación",
+                            x: 20,
+                            y: 15
+                        },
+                        {
+                            id: "finance-2",
+                            name: "BNP Paribas CIB",
+                            description: "Experiencia práctica en gestión de operaciones bursátiles, compliance y verificación de pagos de dividendos.",
+                            date: "Mar 2024 – Ago 2024",
+                            type: "Experiencia",
+                            x: 20,
+                            y: 35
+                        },
+                        {
+                            id: "finance-3",
+                            name: "Máster Ciencias Actuariales",
+                            description: "Formación avanzada en valoración de derivados, técnicas estadísticas y procesos estocásticos.",
+                            date: "2024-2026",
+                            type: "Educación",
+                            x: 20,
+                            y: 55
+                        },
+                        {
+                            id: "finance-4",
+                            name: "Value at Risk (VaR)",
+                            description: "Desarrollo de modelos cuantitativos avanzados para el cálculo de Value at Risk.",
+                            date: "Competencia clave",
+                            type: "Habilidad",
+                            x: 20,
+                            y: 75
+                        },
+                        {
+                            id: "finance-5",
+                            name: "Stress Testing",
+                            description: "Especialización en pruebas de estrés para carteras de inversión.",
+                            date: "Competencia clave",
+                            type: "Habilidad",
+                            x: 20,
+                            y: 90
+                        }
+                    ]
+                },
+                {
+                    id: "programming",
+                    name: "Programación y Tecnología",
+                    color: "var(--programming-color)",
+                    stations: [
+                        {
+                            id: "programming-1",
+                            name: "R Estadístico",
+                            description: "Desarrollo de scripts y modelos de análisis en R para tratamiento de datos financieros.",
+                            date: "Competencia avanzada",
+                            type: "Habilidad",
+                            x: 40,
+                            y: 20
+                        },
+                        {
+                            id: "programming-2",
+                            name: "VBA Macros",
+                            description: "Automatización de procesos y reportes en Excel mediante VBA.",
+                            date: "Competencia avanzada",
+                            type: "Habilidad",
+                            x: 40,
+                            y: 40
+                        },
+                        {
+                            id: "programming-3",
+                            name: "Python Financiero",
+                            description: "Desarrollo de modelos predictivos y análisis de datos con Pandas, NumPy y SciPy.",
+                            date: "Competencia intermedia",
+                            type: "Habilidad",
+                            x: 40,
+                            y: 60
+                        },
+                        {
+                            id: "programming-4",
+                            name: "SAS Programming",
+                            description: "Manejo de SAS para análisis estadístico y gestión de datos.",
+                            date: "Certificación SAS",
+                            type: "Certificación",
+                            x: 40,
+                            y: 80
+                        }
+                    ]
+                },
+                {
+                    id: "math",
+                    name: "Matemáticas y Estadística",
+                    color: "var(--math-color)",
+                    stations: [
+                        {
+                            id: "math-1",
+                            name: "Procesos Estocásticos",
+                            description: "Matrícula de Honor. Modelización de sistemas que evolucionan de forma aleatoria en el tiempo.",
+                            date: "2023",
+                            type: "Educación",
+                            x: 60,
+                            y: 25
+                        },
+                        {
+                            id: "math-2",
+                            name: "Series Temporales",
+                            description: "Matrícula de Honor. Análisis y predicción de datos ordenados en el tiempo.",
+                            date: "2023",
+                            type: "Educación",
+                            x: 60,
+                            y: 45
+                        },
+                        {
+                            id: "math-3",
+                            name: "Estadística Avanzada",
+                            description: "Base sólida en métodos estadísticos aplicados a las finanzas.",
+                            date: "2022",
+                            type: "Educación",
+                            x: 60,
+                            y: 65
+                        },
+                        {
+                            id: "math-4",
+                            name: "Modelos Predictivos",
+                            description: "Desarrollo de modelos con 78% de precisión en predicción de mercados.",
+                            date: "Proyecto destacado",
+                            type: "Habilidad",
+                            x: 60,
+                            y: 85
+                        }
+                    ]
+                },
+                {
+                    id: "economics",
+                    name: "Economía y Negocios",
+                    color: "var(--economics-color)",
+                    stations: [
+                        {
+                            id: "economics-1",
+                            name: "Finanzas Corporativas",
+                            description: "Matrícula de Honor. Gestión financiera de empresas y análisis de inversiones.",
+                            date: "2023",
+                            type: "Educación",
+                            x: 80,
+                            y: 20
+                        },
+                        {
+                            id: "economics-2",
+                            name: "Dirección de Ventas",
+                            description: "Matrícula de Honor. Estrategias comerciales y gestión de equipos.",
+                            date: "2023",
+                            type: "Educación",
+                            x: 80,
+                            y: 40
+                        },
+                        {
+                            id: "economics-3",
+                            name: "JPMorgan Simulation",
+                            description: "Simulación de banca privada con foco en resolución de problemas y habilidades técnicas.",
+                            date: "Nov 2023",
+                            type: "Certificación",
+                            x: 80,
+                            y: 60
+                        },
+                        {
+                            id: "economics-4",
+                            name: "Marketing Digital",
+                            description: "Fundamentos de marketing digital y comercio electrónico.",
+                            date: "Google Activate, 2022",
+                            type: "Certificación",
+                            x: 80,
+                            y: 80
+                        }
+                    ]
+                }
+            ],
+            connections: [
+                { from: "finance-2", to: "programming-2" },
+                { from: "programming-3", to: "math-4" },
+                { from: "math-1", to: "finance-4" },
+                { from: "economics-1", to: "finance-1" }
+            ]
+        };
+
+        // Generar el mapa del metro
+        function generateMetroMap() {
+            const metroMap = document.getElementById('metro-map');
+            
+            // Crear líneas
+            metroData.lines.forEach(line => {
+                const lineEl = document.createElement('div');
+                lineEl.className = `metro-line line-${line.id}`;
+                metroMap.appendChild(lineEl);
+                
+                // Crear estaciones
+                line.stations.forEach(station => {
+                    const stationEl = document.createElement('div');
+                    stationEl.className = `station ${line.id}`;
+                    stationEl.style.left = `${station.x}%`;
+                    stationEl.style.top = `${station.y}%`;
+                    stationEl.dataset.id = station.id;
+                    
+                    const labelEl = document.createElement('div');
+                    labelEl.className = 'station-label';
+                    labelEl.textContent = station.name;
+                    labelEl.style.left = '30px';
+                    labelEl.style.top = '-10px';
+                    
+                    stationEl.appendChild(labelEl);
+                    metroMap.appendChild(stationEl);
+                    
+                    // Añadir evento de clic
+                    stationEl.addEventListener('click', () => showStationDetails(station));
+                });
+            });
+            
+            // Crear conexiones
+            metroData.connections.forEach(conn => {
+                const fromStation = findStation(conn.from);
+                const toStation = findStation(conn.to);
+                
+                if (fromStation && toStation) {
+                    const connectionEl = document.createElement('div');
+                    connectionEl.className = 'station-connection';
+                    connectionEl.style.left = `calc(${fromStation.x}% + 10px)`;
+                    connectionEl.style.top = `calc(${fromStation.y}% + 10px)`;
+                    metroMap.appendChild(connectionEl);
+                }
+            });
+        }
+        
+        function findStation(id) {
+            for (const line of metroData.lines) {
+                for (const station of line.stations) {
+                    if (station.id === id) {
+                        return station;
+                    }
+                }
+            }
+            return null;
+        }
+        
+        function showStationDetails(station) {
+            const details = document.getElementById('station-details');
+            const title = document.getElementById('details-title');
+            const type = document.getElementById('details-type');
+            const description = document.getElementById('details-description');
+            const date = document.getElementById('details-date');
+            
+            title.textContent = station.name;
+            type.textContent = station.type;
+            description.textContent = station.description;
+            date.textContent = station.date;
+            
+            // Encontrar la línea para el color
+            let lineColor = '';
+            for (const line of metroData.lines) {
+                if (line.stations.some(s => s.id === station.id)) {
+                    lineColor = line.color;
+                    break;
+                }
+            }
+            
+            type.style.backgroundColor = lineColor;
+            
+            details.classList.add('active');
+        }
+        
+        // Toggle de tema claro/oscuro
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        // Cerrar detalles
+        document.getElementById('close-details').addEventListener('click', () => {
+            document.getElementById('station-details').classList.remove('active');
+        });
+        
+        // Inicializar el mapa cuando se carga la página
+        window.addEventListener('load', generateMetroMap);
+    </script>
+</body>
+</html>
