@@ -3,29 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metro de Aprendizaje - Javier Torres Rubio</title>
+    <title>Metro del Conocimiento - Javier Torres Rubio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #1a56db;
-            --secondary-color: #0c4a6e;
-            --accent-color: #7e22ce;
             --finance-color: #22c55e;
             --programming-color: #3b82f6;
             --math-color: #f59e0b;
             --economics-color: #ef4444;
-            --dark-color: #1e293b;
-            --light-color: #f8fafc;
-            --bg-color: #f8fafc;
+            --background-color: #f8fafc;
             --text-color: #1e293b;
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg: #ffffff;
+            --station-size: 24px;
+            --line-width: 10px;
         }
 
         [data-theme="dark"] {
-            --bg-color: #0f172a;
+            --background-color: #0f172a;
             --text-color: #f8fafc;
-            --card-bg: rgba(30, 41, 59, 0.9);
+            --card-bg: #1e293b;
         }
 
         * {
@@ -36,12 +33,11 @@
         }
 
         body {
-            background: var(--bg-color);
+            background-color: var(--background-color);
             color: var(--text-color);
-            overflow-x: hidden;
-            line-height: 1.6;
-            padding: 2rem;
+            padding: 20px;
             transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
         }
 
         .container {
@@ -51,130 +47,153 @@
 
         header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 40px;
+            padding: 20px;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
             color: var(--text-color);
         }
 
         .subtitle {
             font-size: 1.2rem;
             opacity: 0.8;
-            margin-bottom: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .metro-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+            position: relative;
+            min-height: 600px;
         }
 
         .metro-map {
             position: relative;
             width: 100%;
-            min-height: 600px;
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            height: 500px;
         }
 
+        /* Líneas del metro */
         .metro-line {
             position: absolute;
-            width: 8px;
-            transform-origin: top left;
+            height: var(--line-width);
+            border-radius: 10px;
+            transform-origin: left center;
         }
 
         .line-finance {
             background-color: var(--finance-color);
-            height: 500px;
-            top: 100px;
-            left: 20%;
+            top: 20%;
+            left: 5%;
+            width: 90%;
         }
 
         .line-programming {
             background-color: var(--programming-color);
-            height: 550px;
-            top: 80px;
-            left: 40%;
-            transform: rotate(5deg);
+            top: 40%;
+            left: 5%;
+            width: 90%;
         }
 
         .line-math {
             background-color: var(--math-color);
-            height: 600px;
-            top: 70px;
-            left: 60%;
-            transform: rotate(-3deg);
+            top: 60%;
+            left: 5%;
+            width: 90%;
         }
 
         .line-economics {
             background-color: var(--economics-color);
-            height: 480px;
-            top: 110px;
-            left: 80%;
-            transform: rotate(2deg);
+            top: 80%;
+            left: 5%;
+            width: 90%;
         }
 
+        /* Estaciones */
         .station {
             position: absolute;
-            width: 24px;
-            height: 24px;
+            width: var(--station-size);
+            height: var(--station-size);
             border-radius: 50%;
-            border: 4px solid white;
-            box-shadow: 0 0 0 3px currentColor;
-            z-index: 10;
+            background-color: white;
+            border: 4px solid;
+            transform: translate(-50%, -50%);
             cursor: pointer;
+            z-index: 20;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .station:hover {
-            transform: scale(1.2);
+            transform: translate(-50%, -50%) scale(1.3);
+            z-index: 30;
         }
 
-        .station.finance { background-color: var(--finance-color); }
-        .station.programming { background-color: var(--programming-color); }
-        .station.math { background-color: var(--math-color); }
-        .station.economics { background-color: var(--economics-color); }
+        .station.finance { border-color: var(--finance-color); }
+        .station.programming { border-color: var(--programming-color); }
+        .station.math { border-color: var(--math-color); }
+        .station.economics { border-color: var(--economics-color); }
 
         .station-label {
             position: absolute;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            padding: 0.3rem 0.6rem;
+            padding: 6px 12px;
             border-radius: 6px;
-            background: var(--card-bg);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             white-space: nowrap;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s ease;
-            z-index: 20;
+            z-index: 25;
+            max-width: 200px;
+            text-align: center;
+        }
+
+        .station-label-top {
+            bottom: calc(var(--station-size) + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .station-label-bottom {
+            top: calc(var(--station-size) + 10px);
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .station:hover .station-label {
             opacity: 1;
         }
 
-        .station-connection {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: var(--dark-color);
-            z-index: 5;
-        }
-
+        /* Leyenda */
         .legend {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 2rem;
+            gap: 20px;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 10px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.05);
         }
 
         .legend-color {
@@ -185,8 +204,10 @@
 
         .legend-text {
             font-weight: 500;
+            font-size: 1rem;
         }
 
+        /* Panel de detalles */
         .station-details {
             position: fixed;
             bottom: -100%;
@@ -196,7 +217,7 @@
             max-width: 500px;
             background: var(--card-bg);
             border-radius: 16px 16px 0 0;
-            padding: 1.5rem;
+            padding: 24px;
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15);
             z-index: 100;
             transition: bottom 0.4s ease;
@@ -208,8 +229,8 @@
 
         .close-details {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
+            top: 16px;
+            right: 16px;
             background: none;
             border: none;
             font-size: 1.5rem;
@@ -218,33 +239,37 @@
         }
 
         .details-title {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
             color: var(--text-color);
         }
 
         .details-type {
             display: inline-block;
-            padding: 0.3rem 0.7rem;
+            padding: 6px 12px;
             border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
             color: white;
+            font-weight: 500;
         }
 
         .details-description {
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
+            line-height: 1.6;
         }
 
         .details-date {
             font-size: 0.9rem;
             opacity: 0.8;
+            font-style: italic;
         }
 
+        /* Toggle de tema */
         .theme-toggle {
             position: fixed;
-            top: 2rem;
-            right: 2rem;
+            top: 20px;
+            right: 20px;
             background: var(--card-bg);
             border: none;
             width: 50px;
@@ -258,9 +283,10 @@
             z-index: 90;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             body {
-                padding: 1rem;
+                padding: 10px;
             }
             
             h1 {
@@ -271,21 +297,51 @@
                 font-size: 1rem;
             }
             
+            .metro-container {
+                padding: 15px;
+            }
+            
             .metro-map {
-                padding: 1rem;
-                min-height: 500px;
+                height: 400px;
             }
             
             .station-label {
-                font-size: 0.7rem;
-                padding: 0.2rem 0.4rem;
+                font-size: 0.8rem;
+                max-width: 150px;
             }
             
             .legend {
                 flex-direction: column;
                 align-items: center;
-                gap: 0.8rem;
+                gap: 12px;
             }
+            
+            .legend-item {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Mejoras para el mapa */
+        .line-name {
+            position: absolute;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            color: white;
+            z-index: 10;
+        }
+
+        .connection {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            border: 3px solid #64748b;
+            z-index: 15;
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
@@ -293,29 +349,31 @@
     <div class="container">
         <header>
             <h1>Metro del Conocimiento</h1>
-            <p class="subtitle">Trayectoria de aprendizaje de Javier Torres Rubio</p>
+            <p class="subtitle">Explora mi trayectoria de aprendizaje a través de esta representación visual inspirada en los mapas de metro</p>
         </header>
         
-        <div class="metro-map" id="metro-map">
-            <!-- Las líneas y estaciones se generarán con JavaScript -->
+        <div class="metro-container">
+            <div class="metro-map" id="metro-map">
+                <!-- Líneas y estaciones se generarán con JavaScript -->
+            </div>
         </div>
         
         <div class="legend">
             <div class="legend-item">
                 <div class="legend-color" style="background-color: var(--finance-color);"></div>
-                <span class="legend-text">Finanzas y Risk Modeling</span>
+                <span class="legend-text">Línea Finanzas y Risk Modeling</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: var(--programming-color);"></div>
-                <span class="legend-text">Programación y Tecnología</span>
+                <span class="legend-text">Línea Programación y Tecnología</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: var(--math-color);"></div>
-                <span class="legend-text">Matemáticas y Estadística</span>
+                <span class="legend-text">Línea Matemáticas y Estadística</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: var(--economics-color);"></div>
-                <span class="legend-text">Economía y Negocios</span>
+                <span class="legend-text">Línea Economía y Negocios</span>
             </div>
         </div>
     </div>
@@ -347,8 +405,7 @@
                             description: "Formación base en principios económicos y financieros, sentando las bases para el análisis de riesgos.",
                             date: "2020-2024",
                             type: "Educación",
-                            x: 20,
-                            y: 15
+                            position: 10
                         },
                         {
                             id: "finance-2",
@@ -356,8 +413,7 @@
                             description: "Experiencia práctica en gestión de operaciones bursátiles, compliance y verificación de pagos de dividendos.",
                             date: "Mar 2024 – Ago 2024",
                             type: "Experiencia",
-                            x: 20,
-                            y: 35
+                            position: 30
                         },
                         {
                             id: "finance-3",
@@ -365,8 +421,7 @@
                             description: "Formación avanzada en valoración de derivados, técnicas estadísticas y procesos estocásticos.",
                             date: "2024-2026",
                             type: "Educación",
-                            x: 20,
-                            y: 55
+                            position: 50
                         },
                         {
                             id: "finance-4",
@@ -374,8 +429,7 @@
                             description: "Desarrollo de modelos cuantitativos avanzados para el cálculo de Value at Risk.",
                             date: "Competencia clave",
                             type: "Habilidad",
-                            x: 20,
-                            y: 75
+                            position: 70
                         },
                         {
                             id: "finance-5",
@@ -383,8 +437,7 @@
                             description: "Especialización en pruebas de estrés para carteras de inversión.",
                             date: "Competencia clave",
                             type: "Habilidad",
-                            x: 20,
-                            y: 90
+                            position: 90
                         }
                     ]
                 },
@@ -399,8 +452,7 @@
                             description: "Desarrollo de scripts y modelos de análisis en R para tratamiento de datos financieros.",
                             date: "Competencia avanzada",
                             type: "Habilidad",
-                            x: 40,
-                            y: 20
+                            position: 15
                         },
                         {
                             id: "programming-2",
@@ -408,8 +460,7 @@
                             description: "Automatización de procesos y reportes en Excel mediante VBA.",
                             date: "Competencia avanzada",
                             type: "Habilidad",
-                            x: 40,
-                            y: 40
+                            position: 35
                         },
                         {
                             id: "programming-3",
@@ -417,8 +468,7 @@
                             description: "Desarrollo de modelos predictivos y análisis de datos con Pandas, NumPy y SciPy.",
                             date: "Competencia intermedia",
                             type: "Habilidad",
-                            x: 40,
-                            y: 60
+                            position: 55
                         },
                         {
                             id: "programming-4",
@@ -426,8 +476,7 @@
                             description: "Manejo de SAS para análisis estadístico y gestión de datos.",
                             date: "Certificación SAS",
                             type: "Certificación",
-                            x: 40,
-                            y: 80
+                            position: 75
                         }
                     ]
                 },
@@ -442,8 +491,7 @@
                             description: "Matrícula de Honor. Modelización de sistemas que evolucionan de forma aleatoria en el tiempo.",
                             date: "2023",
                             type: "Educación",
-                            x: 60,
-                            y: 25
+                            position: 20
                         },
                         {
                             id: "math-2",
@@ -451,8 +499,7 @@
                             description: "Matrícula de Honor. Análisis y predicción de datos ordenados en el tiempo.",
                             date: "2023",
                             type: "Educación",
-                            x: 60,
-                            y: 45
+                            position: 40
                         },
                         {
                             id: "math-3",
@@ -460,8 +507,7 @@
                             description: "Base sólida en métodos estadísticos aplicados a las finanzas.",
                             date: "2022",
                             type: "Educación",
-                            x: 60,
-                            y: 65
+                            position: 60
                         },
                         {
                             id: "math-4",
@@ -469,8 +515,7 @@
                             description: "Desarrollo de modelos con 78% de precisión en predicción de mercados.",
                             date: "Proyecto destacado",
                             type: "Habilidad",
-                            x: 60,
-                            y: 85
+                            position: 80
                         }
                     ]
                 },
@@ -485,8 +530,7 @@
                             description: "Matrícula de Honor. Gestión financiera de empresas y análisis de inversiones.",
                             date: "2023",
                             type: "Educación",
-                            x: 80,
-                            y: 20
+                            position: 25
                         },
                         {
                             id: "economics-2",
@@ -494,8 +538,7 @@
                             description: "Matrícula de Honor. Estrategias comerciales y gestión de equipos.",
                             date: "2023",
                             type: "Educación",
-                            x: 80,
-                            y: 40
+                            position: 45
                         },
                         {
                             id: "economics-3",
@@ -503,8 +546,7 @@
                             description: "Simulación de banca privada con foco en resolución de problemas y habilidades técnicas.",
                             date: "Nov 2023",
                             type: "Certificación",
-                            x: 80,
-                            y: 60
+                            position: 65
                         },
                         {
                             id: "economics-4",
@@ -512,8 +554,7 @@
                             description: "Fundamentos de marketing digital y comercio electrónico.",
                             date: "Google Activate, 2022",
                             type: "Certificación",
-                            x: 80,
-                            y: 80
+                            position: 85
                         }
                     ]
                 }
@@ -531,30 +572,44 @@
             const metroMap = document.getElementById('metro-map');
             
             // Crear líneas
-            metroData.lines.forEach(line => {
+            metroData.lines.forEach((line, index) => {
                 const lineEl = document.createElement('div');
                 lineEl.className = `metro-line line-${line.id}`;
                 metroMap.appendChild(lineEl);
+                
+                // Añadir nombre de la línea
+                const lineNameEl = document.createElement('div');
+                lineNameEl.className = 'line-name';
+                lineNameEl.textContent = line.name;
+                lineNameEl.style.backgroundColor = line.color;
+                lineNameEl.style.top = `${(index * 20) + 20}%`;
+                lineNameEl.style.left = '5%';
+                metroMap.appendChild(lineNameEl);
                 
                 // Crear estaciones
                 line.stations.forEach(station => {
                     const stationEl = document.createElement('div');
                     stationEl.className = `station ${line.id}`;
-                    stationEl.style.left = `${station.x}%`;
-                    stationEl.style.top = `${station.y}%`;
+                    stationEl.style.left = `${station.position}%`;
+                    stationEl.style.top = `${(index * 20) + 20}%`;
                     stationEl.dataset.id = station.id;
                     
                     const labelEl = document.createElement('div');
                     labelEl.className = 'station-label';
                     labelEl.textContent = station.name;
-                    labelEl.style.left = '30px';
-                    labelEl.style.top = '-10px';
+                    
+                    // Alternar posición de las etiquetas para evitar superposiciones
+                    if (index % 2 === 0) {
+                        labelEl.classList.add('station-label-top');
+                    } else {
+                        labelEl.classList.add('station-label-bottom');
+                    }
                     
                     stationEl.appendChild(labelEl);
                     metroMap.appendChild(stationEl);
                     
                     // Añadir evento de clic
-                    stationEl.addEventListener('click', () => showStationDetails(station));
+                    stationEl.addEventListener('click', () => showStationDetails(station, line));
                 });
             });
             
@@ -564,10 +619,15 @@
                 const toStation = findStation(conn.to);
                 
                 if (fromStation && toStation) {
+                    const fromLineIndex = metroData.lines.findIndex(line => 
+                        line.stations.some(s => s.id === fromStation.id));
+                    const toLineIndex = metroData.lines.findIndex(line => 
+                        line.stations.some(s => s.id === toStation.id));
+                    
                     const connectionEl = document.createElement('div');
-                    connectionEl.className = 'station-connection';
-                    connectionEl.style.left = `calc(${fromStation.x}% + 10px)`;
-                    connectionEl.style.top = `calc(${fromStation.y}% + 10px)`;
+                    connectionEl.className = 'connection';
+                    connectionEl.style.left = `${(fromStation.position + toStation.position) / 2}%`;
+                    connectionEl.style.top = `${((fromLineIndex * 20) + 20 + (toLineIndex * 20) + 20) / 2}%`;
                     metroMap.appendChild(connectionEl);
                 }
             });
@@ -577,14 +637,14 @@
             for (const line of metroData.lines) {
                 for (const station of line.stations) {
                     if (station.id === id) {
-                        return station;
+                        return { ...station, line: line.id };
                     }
                 }
             }
             return null;
         }
         
-        function showStationDetails(station) {
+        function showStationDetails(station, line) {
             const details = document.getElementById('station-details');
             const title = document.getElementById('details-title');
             const type = document.getElementById('details-type');
@@ -596,16 +656,7 @@
             description.textContent = station.description;
             date.textContent = station.date;
             
-            // Encontrar la línea para el color
-            let lineColor = '';
-            for (const line of metroData.lines) {
-                if (line.stations.some(s => s.id === station.id)) {
-                    lineColor = line.color;
-                    break;
-                }
-            }
-            
-            type.style.backgroundColor = lineColor;
+            type.style.backgroundColor = line.color;
             
             details.classList.add('active');
         }
