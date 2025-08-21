@@ -323,60 +323,162 @@
             left: -10px;
         }
 
-        /* Mapa de Competencias */
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+        /* Nueva Sección de Competencias */
+        .competencies-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             max-width: 1000px;
             margin: 0 auto;
         }
 
-        .skill-radar {
-            width: 100%;
-            max-width: 500px;
-            height: 400px;
+        .competency-category {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 16px;
             border: 1px solid var(--glass-border);
-            padding: 2rem;
+            padding: 1.5rem;
             box-shadow: 0 4px 30px var(--glass-shadow);
+            transition: all 0.3s ease;
         }
 
-        .skill-item {
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.8s ease;
+        .competency-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--glass-shadow);
         }
 
-        .skill-item.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .skill-info {
+        .category-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-title i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .competency-list {
+            list-style: none;
+        }
+
+        .competency-item {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .competency-item i {
+            color: var(--secondary-color);
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Sección de Reconocimientos */
+        .awards-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .award-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 30px var(--glass-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .award-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--glass-shadow);
+        }
+
+        .award-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light-color);
+        }
+
+        .award-issuer {
+            font-weight: 500;
+            color: var(--secondary-color);
             margin-bottom: 0.5rem;
         }
 
-        .skill-bar {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
+        .award-date {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
         }
 
-        .skill-progress {
-            height: 100%;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            border-radius: 10px;
-            width: 0;
-            transition: width 1.5s ease;
+        .award-desc {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        /* Sección de Certificaciones */
+        .certs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .cert-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            box-shadow: 0 4px 30px var(--glass-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .cert-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--glass-shadow);
+        }
+
+        .cert-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light-color);
+        }
+
+        .cert-issuer {
+            font-weight: 500;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-date {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background: rgba(37, 99, 235, 0.2);
+            color: var(--secondary-color);
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
         }
 
         /* Sección Contacto - iPhone */
@@ -424,29 +526,40 @@
             z-index: 10;
         }
 
-        .notifications {
-            padding: 20px;
-            flex-grow: 1;
-            overflow-y: auto;
+        .notifications-container {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
         }
 
         .notification {
+            position: absolute;
+            width: calc(100% - 40px);
+            margin: 0 20px;
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 14px;
             padding: 15px;
-            margin-bottom: 15px;
             display: flex;
             align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid var(--glass-border);
+            opacity: 0;
+            transform: translateY(100%);
+            z-index: 1;
         }
 
-        .notification:hover {
-            transform: translateX(5px);
-            background: rgba(37, 99, 235, 0.2);
+        .notification.active {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 2;
+        }
+
+        .notification.hiding {
+            opacity: 0;
+            transform: translateY(-100%);
         }
 
         .notification-icon {
@@ -465,6 +578,7 @@
         .email { background: #EA4335; }
         .call { background: #34A853; }
         .whatsapp { background: #25D366; }
+        .job-offer { background: #7e22ce; }
 
         .notification-content {
             flex-grow: 1;
@@ -551,6 +665,10 @@
             .section-title {
                 font-size: 2rem;
             }
+
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -563,7 +681,9 @@
                 <li><a href="#hero">Inicio</a></li>
                 <li><a href="#about">Sobre Mí</a></li>
                 <li><a href="#timeline">Trayectoria</a></li>
-                <li><a href="#skills">Competencias</a></li>
+                <li><a href="#competencies">Competencias</a></li>
+                <li><a href="#awards">Reconocimientos</a></li>
+                <li><a href="#certifications">Certificaciones</a></li>
                 <li><a href="#contact">Contacto</a></li>
             </ul>
         </nav>
@@ -626,61 +746,143 @@
         </div>
     </section>
 
-    <!-- Mapa de Competencias -->
-    <section id="skills">
+    <!-- Competencias -->
+    <section id="competencies">
         <div class="container">
             <h2 class="section-title">Competencias</h2>
-            <div class="skills-container">
-                <div class="skill-radar">
-                    <!-- Aquí iría el gráfico de radar (se implementaría con JavaScript) -->
-                    <canvas id="radarChart" width="400" height="400"></canvas>
+            <div class="competencies-container">
+                <div class="competency-category">
+                    <h3 class="category-title"><i class="fas fa-chart-line"></i> Análisis de Riesgo</h3>
+                    <ul class="competency-list">
+                        <li class="competency-item"><i class="fas fa-check"></i> Value at Risk (VaR)</li>
+                        <li class="competency-item"><i class="fas fa-check"></i> Stress Testing</li>
+                        <li class="competency-item"><i class="fas fa-check"></i> Modelos Cuantitativos</li>
+                        <li class="competency-item"><i class="fas fa-check"></i> Gestión de Operaciones Bursátiles</li>
+                    </ul>
                 </div>
-                <div class="skill-bars">
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Análisis de Riesgo (VaR, Stress Testing)</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="90%"></div>
-                        </div>
+                <div class="competency-category">
+                    <h3 class="category-title"><i class="fas fa-code"></i> Programación</h3>
+                    <ul class="competency-list">
+                        <li class="competency-item"><i class="fas fa-check"></i> R</li>
+                        <li class="competency-item"><i class="fas fa-check"></i> VBA</li>
+                        <li class="competency-item"><i class="fas fa-check"></i> SAS</li>
+                        <li class="competency-item"><i class="fas fa-check"></i> Python</li>
+                    </ul>
+                </div>
+                <div class="competency-category">
+                    <h3 class="category-title"><i class="fas fa-calculator"></i> Análisis Cuantitativo</h3>
+                    <ul class="competency-list">
+                        <li class="competency-item"><i class="fas fa-check"></i> Procesos Estocásticos</li>
+                        <li class="competency-item"><i class="fas fa-check"></i> Series Temporales</li>
+                        <li class="competency-item"><i class="fas fa-check"></i> Estadística Avanzada</li>
+                        <li class="competency-item"><i class="fas fa-check"></i> Finanzas Corporativas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reconocimientos -->
+    <section id="awards">
+        <div class="container">
+            <h2 class="section-title">Reconocimientos y Premios</h2>
+            <div class="awards-container">
+                <div class="award-item">
+                    <h3 class="award-title">Matrícula de Honor en Contabilidad de Entidades de Seguros</h3>
+                    <div class="award-issuer">Universidad Carlos III de Madrid</div>
+                    <div class="award-date">Enero 2025</div>
+                    <p class="award-desc">Expedida por UC3M</p>
+                </div>
+                <div class="award-item">
+                    <h3 class="award-title">Matrícula de Honor en Prácticas Externas</h3>
+                    <div class="award-issuer">Universidad Rey Juan Carlos</div>
+                    <div class="award-date">Junio 2024</div>
+                    <p class="award-desc">Expedida por URJC</p>
+                </div>
+                <div class="award-item">
+                    <h3 class="award-title">Matrícula de Honor en Dirección de Ventas</h3>
+                    <div class="award-issuer">Universidad Rey Juan Carlos</div>
+                    <div class="award-date">Mayo 2023</div>
+                    <p class="award-desc">Expedida por URJC</p>
+                </div>
+                <div class="award-item">
+                    <h3 class="award-title">Matrícula de Honor en Finanzas Corporativas</h3>
+                    <div class="award-issuer">Universidad Rey Juan Carlos</div>
+                    <div class="award-date">Mayo 2023</div>
+                    <p class="award-desc">Expedida por URJC</p>
+                </div>
+                <div class="award-item">
+                    <h3 class="award-title">Matrícula de Honor en Introducción a la Estadística</h3>
+                    <div class="award-issuer">Universidad Rey Juan Carlos</div>
+                    <div class="award-date">Enero 2022</div>
+                    <p class="award-desc">Expedida por URJC</p>
+                </div>
+                <div class="award-item">
+                    <h3 class="award-title">Matrícula de Honor en Introducción al Derecho</h3>
+                    <div class="award-issuer">Universidad Rey Juan Carlos</div>
+                    <div class="award-date">Enero 2021</div>
+                    <p class="award-desc">Expedida por URJC</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificaciones -->
+    <section id="certifications">
+        <div class="container">
+            <h2 class="section-title">Licencias y Certificaciones</h2>
+            <div class="certs-container">
+                <div class="cert-item">
+                    <h3 class="cert-title">Global Private Bank Job Simulation</h3>
+                    <div class="cert-issuer">JPMorgan Chase</div>
+                    <div class="cert-date">Noviembre 2023</div>
+                    <div class="cert-skills">
+                        <span class="skill-tag">Problem Solving</span>
+                        <span class="skill-tag">Technical Skills</span>
+                        <span class="skill-tag">Communication</span>
+                        <span class="skill-tag">Presentation</span>
+                        <span class="skill-tag">Networking</span>
+                        <span class="skill-tag">Relationship Skills</span>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Programación en R</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="85%"></div>
-                        </div>
+                </div>
+                <div class="cert-item">
+                    <h3 class="cert-title">FCE B2 First</h3>
+                    <div class="cert-issuer">Cambridge University Press & Assessment</div>
+                    <div class="cert-date">Septiembre 2023</div>
+                    <div class="cert-skills">
+                        <span class="skill-tag">English</span>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>VBA</span>
-                            <span>80%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="80%"></div>
-                        </div>
+                </div>
+                <div class="cert-item">
+                    <h3 class="cert-title">SAS Programming 1: Essentials</h3>
+                    <div class="cert-issuer">SAS</div>
+                    <div class="cert-date">Julio 2023</div>
+                    <div class="cert-skills">
+                        <span class="skill-tag">SAS Base</span>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Estadística Avanzada</span>
-                            <span>88%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="88%"></div>
-                        </div>
+                </div>
+                <div class="cert-item">
+                    <h3 class="cert-title">SAS Programming for R Users</h3>
+                    <div class="cert-issuer">SAS</div>
+                    <div class="cert-date">Junio 2023</div>
+                </div>
+                <div class="cert-item">
+                    <h3 class="cert-title">Data Literacy Essentials</h3>
+                    <div class="cert-issuer">SAS</div>
+                    <div class="cert-date">Mayo 2023</div>
+                    <div class="cert-skills">
+                        <span class="skill-tag">Alfabetización</span>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Finanzas Cuantitativas</span>
-                            <span>92%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="92%"></div>
-                        </div>
-                    </div>
+                </div>
+                <div class="cert-item">
+                    <h3 class="cert-title">Comercio Electrónico</h3>
+                    <div class="cert-issuer">Google Activate</div>
+                    <div class="cert-date">Julio 2022</div>
+                </div>
+                <div class="cert-item">
+                    <h3 class="cert-title">Fundamentos Marketing Digital</h3>
+                    <div class="cert-issuer">Google Activate</div>
+                    <div class="cert-date">Junio 2022</div>
                 </div>
             </div>
         </div>
@@ -694,47 +896,8 @@
                 <div class="iphone">
                     <div class="iphone-screen">
                         <div class="dynamic-island"></div>
-                        <div class="notifications">
-                            <div class="notification" onclick="window.open('https://linkedin.com/in/javier-torres-rubio', '_blank')">
-                                <div class="notification-icon linkedin">
-                                    <i class="fab fa-linkedin"></i>
-                                </div>
-                                <div class="notification-content">
-                                    <div class="notification-app">LinkedIn</div>
-                                    <div class="notification-text">Nueva oportunidad laboral en análisis de riesgos</div>
-                                    <div class="notification-time">Ahora</div>
-                                </div>
-                            </div>
-                            <div class="notification" onclick="location.href='mailto:javiertorresrubio9@gmail.com'">
-                                <div class="notification-icon email">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div class="notification-content">
-                                    <div class="notification-app">Email</div>
-                                    <div class="notification-text">Consulta sobre tu perfil profesional</div>
-                                    <div class="notification-time">Hace 5 min</div>
-                                </div>
-                            </div>
-                            <div class="notification" onclick="location.href='tel:+34654609650'">
-                                <div class="notification-icon call">
-                                    <i class="fas fa-phone"></i>
-                                </div>
-                                <div class="notification-content">
-                                    <div class="notification-app">Llamada</div>
-                                    <div class="notification-text">Reclutador - BNP Paribas</div>
-                                    <div class="notification-time">Hace 20 min</div>
-                                </div>
-                            </div>
-                            <div class="notification" onclick="window.open('https://wa.me/34654609650', '_blank')">
-                                <div class="notification-icon whatsapp">
-                                    <i class="fab fa-whatsapp"></i>
-                                </div>
-                                <div class="notification-content">
-                                    <div class="notification-app">WhatsApp</div>
-                                    <div class="notification-text">Hola Javier, me interesa tu perfil...</div>
-                                    <div class="notification-time">Ayer</div>
-                                </div>
-                            </div>
+                        <div class="notifications-container" id="notifications-container">
+                            <!-- Las notificaciones se generarán dinámicamente con JavaScript -->
                         </div>
                         <div class="iphone-footer">
                             Desliza para más opciones de contacto
@@ -780,14 +943,6 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    
-                    // Animar barras de habilidades
-                    if (entry.target.classList.contains('skill-item')) {
-                        const progressBar = entry.target.querySelector('.skill-progress');
-                        setTimeout(() => {
-                            progressBar.style.width = progressBar.getAttribute('data-width');
-                        }, 200);
-                    }
                 }
             });
         }, observerOptions);
@@ -795,71 +950,6 @@
         // Observar elementos de la timeline
         document.querySelectorAll('.timeline-item').forEach(item => {
             observer.observe(item);
-        });
-
-        // Observar elementos de habilidades
-        document.querySelectorAll('.skill-item').forEach(item => {
-            observer.observe(item);
-        });
-
-        // Gráfico de radar de competencias
-        document.addEventListener('DOMContentLoaded', function() {
-            const canvas = document.getElementById('radarChart');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                
-                // Datos para el gráfico de radar
-                const data = {
-                    labels: ['Análisis de Riesgo', 'Programación R', 'VBA', 'Estadística', 'Finanzas Cuantitativas', 'Machine Learning'],
-                    datasets: [{
-                        label: 'Nivel de Competencia',
-                        data: [90, 85, 80, 88, 92, 75],
-                        backgroundColor: 'rgba(37, 99, 235, 0.2)',
-                        borderColor: 'rgba(37, 99, 235, 0.8)',
-                        pointBackgroundColor: 'rgba(37, 99, 235, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(37, 99, 235, 1)'
-                    }]
-                };
-
-                // Opciones del gráfico
-                const options = {
-                    scale: {
-                        ticks: {
-                            beginAtZero: true,
-                            max: 100,
-                            stepSize: 20
-                        },
-                        angleLines: {
-                            color: 'rgba(255, 255, 255, 0.2)'
-                        },
-                        gridLines: {
-                            color: 'rgba(255, 255, 255, 0.2)'
-                        },
-                        pointLabels: {
-                            fontColor: '#f8fafc',
-                            fontSize: 12
-                        }
-                    },
-                    legend: {
-                        labels: {
-                            fontColor: '#f8fafc'
-                        }
-                    },
-                    animation: {
-                        duration: 2000,
-                        easing: 'easeOutQuart'
-                    }
-                };
-
-                // Dibujar el gráfico de radar
-                const radarChart = new Chart(ctx, {
-                    type: 'radar',
-                    data: data,
-                    options: options
-                });
-            }
         });
 
         // Efecto de rotación 3D para el iPhone
@@ -871,6 +961,93 @@
                 iphone.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
             }
         });
+
+        // Sistema de notificaciones para el iPhone
+        const notifications = [
+            {
+                app: 'LinkedIn',
+                text: 'Nueva oportunidad laboral en análisis de riesgos',
+                time: 'Ahora',
+                type: 'linkedin',
+                action: () => window.open('https://linkedin.com/in/javier-torres-rubio', '_blank')
+            },
+            {
+                app: 'Email',
+                text: 'Consulta sobre tu perfil profesional',
+                time: 'Hace 5 min',
+                type: 'email',
+                action: () => location.href='mailto:javiertorresrubio9@gmail.com'
+            },
+            {
+                app: 'Llamada',
+                text: 'Reclutador - BNP Paribas',
+                time: 'Hace 20 min',
+                type: 'call',
+                action: () => location.href='tel:+34654609650'
+            },
+            {
+                app: 'WhatsApp',
+                text: 'Hola Javier, me interesa tu perfil...',
+                time: 'Ayer',
+                type: 'whatsapp',
+                action: () => window.open('https://wa.me/34654609650', '_blank')
+            },
+            {
+                app: 'Oferta de Trabajo',
+                text: 'Analista de Riesgos Cuantitativos - Santander',
+                time: 'Ayer',
+                type: 'job-offer',
+                action: () => window.open('https://linkedin.com/in/javier-torres-rubio', '_blank')
+            }
+        ];
+
+        const notificationsContainer = document.getElementById('notifications-container');
+        let currentNotification = 0;
+
+        function showNextNotification() {
+            // Ocultar notificación actual si existe
+            const current = notificationsContainer.querySelector('.notification.active');
+            if (current) {
+                current.classList.remove('active');
+                current.classList.add('hiding');
+                
+                setTimeout(() => {
+                    current.remove();
+                }, 300);
+            }
+
+            // Crear nueva notificación
+            const notificationData = notifications[currentNotification];
+            const notificationEl = document.createElement('div');
+            notificationEl.className = 'notification';
+            notificationEl.innerHTML = `
+                <div class="notification-icon ${notificationData.type}">
+                    <i class="fab fa-${notificationData.type}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-app">${notificationData.app}</div>
+                    <div class="notification-text">${notificationData.text}</div>
+                    <div class="notification-time">${notificationData.time}</div>
+                </div>
+            `;
+            
+            notificationEl.addEventListener('click', notificationData.action);
+            notificationsContainer.appendChild(notificationEl);
+            
+            // Animar la entrada
+            setTimeout(() => {
+                notificationEl.classList.add('active');
+            }, 50);
+
+            // Avanzar al siguiente índice
+            currentNotification = (currentNotification + 1) % notifications.length;
+
+            // Programar siguiente notificación
+            setTimeout(showNextNotification, 4000);
+        }
+
+        // Iniciar el ciclo de notificaciones
+        setTimeout(showNextNotification, 1000);
     </script>
 </body>
 </html>
