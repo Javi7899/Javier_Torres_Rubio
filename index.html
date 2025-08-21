@@ -6,6 +6,8 @@
     <title>Javier Torres Rubio | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #2563eb;
@@ -16,6 +18,17 @@
             --glass-bg: rgba(255, 255, 255, 0.1);
             --glass-border: rgba(255, 255, 255, 0.2);
             --glass-shadow: rgba(0, 0, 0, 0.1);
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --card-bg: rgba(30, 41, 59, 0.9);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -23,11 +36,12 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         body {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: var(--light-color);
+            background: var(--bg-color);
+            color: var(--text-color);
             overflow-x: hidden;
             line-height: 1.6;
         }
@@ -55,13 +69,13 @@
             z-index: 1000;
             padding: 1.5rem 2rem;
             transition: all 0.3s ease;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         header.scrolled {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 5px 15px var(--glass-shadow);
             padding: 1rem 2rem;
         }
 
@@ -74,7 +88,7 @@
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--light-color);
+            color: var(--text-color);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -94,7 +108,7 @@
         }
 
         .nav-links a {
-            color: var(--light-color);
+            color: var(--text-color);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -120,6 +134,85 @@
             width: 100%;
         }
 
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .language-selector {
+            position: relative;
+        }
+
+        .language-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+        }
+
+        .language-dropdown.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .language-option:hover {
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .download-cv {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .download-cv:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+
         /* Hero Section */
         #hero {
             position: relative;
@@ -141,9 +234,10 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, #0f172a, #1e293b, #334155, #475569);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
+            opacity: 0.8;
         }
 
         @keyframes gradientBG {
@@ -165,8 +259,8 @@
             height: 200px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--glass-border);
-            box-shadow: 0 8px 32px var(--glass-shadow);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             margin-bottom: 2rem;
             background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
             display: flex;
@@ -190,6 +284,13 @@
             margin-bottom: 2rem;
         }
 
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         .btn {
             display: inline-block;
             padding: 0.8rem 2rem;
@@ -207,6 +308,17 @@
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
         }
 
         /* Secciones generales */
@@ -252,14 +364,6 @@
             padding: 10px 40px;
             position: relative;
             width: 50%;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .timeline-item.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .timeline-item:nth-child(even) {
@@ -272,18 +376,18 @@
 
         .timeline-content {
             padding: 20px;
-            background: var(--glass-bg);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 16px;
             border: 1px solid var(--glass-border);
-            box-shadow: 0 4px 30px var(--glass-shadow);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
         .timeline-content:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px var(--glass-shadow);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
         .timeline-date {
@@ -296,11 +400,12 @@
         .timeline-title {
             font-size: 1.3rem;
             margin-bottom: 10px;
-            color: var(--light-color);
+            color: var(--text-color);
         }
 
         .timeline-desc {
-            color: #cbd5e1;
+            color: var(--text-color);
+            opacity: 0.8;
         }
 
         .timeline-item::after {
@@ -333,19 +438,19 @@
         }
 
         .competency-category {
-            background: var(--glass-bg);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 16px;
             border: 1px solid var(--glass-border);
             padding: 1.5rem;
-            box-shadow: 0 4px 30px var(--glass-shadow);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
         .competency-category:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px var(--glass-shadow);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
         .category-title {
@@ -384,26 +489,26 @@
         }
 
         .award-item {
-            background: var(--glass-bg);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 16px;
             border: 1px solid var(--glass-border);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 4px 30px var(--glass-shadow);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
         .award-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px var(--glass-shadow);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
         .award-title {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: var(--light-color);
+            color: var(--text-color);
         }
 
         .award-issuer {
@@ -414,12 +519,14 @@
 
         .award-date {
             font-size: 0.9rem;
-            color: #94a3b8;
+            color: var(--text-color);
+            opacity: 0.7;
             margin-bottom: 0.5rem;
         }
 
         .award-desc {
-            color: #cbd5e1;
+            color: var(--text-color);
+            opacity: 0.8;
             font-size: 0.95rem;
         }
 
@@ -433,25 +540,25 @@
         }
 
         .cert-item {
-            background: var(--glass-bg);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 16px;
             border: 1px solid var(--glass-border);
             padding: 1.5rem;
-            box-shadow: 0 4px 30px var(--glass-shadow);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
         .cert-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px var(--glass-shadow);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
         .cert-title {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: var(--light-color);
+            color: var(--text-color);
         }
 
         .cert-issuer {
@@ -462,7 +569,8 @@
 
         .cert-date {
             font-size: 0.9rem;
-            color: #94a3b8;
+            color: var(--text-color);
+            opacity: 0.7;
             margin-bottom: 0.5rem;
         }
 
@@ -492,7 +600,7 @@
         .iphone {
             width: 320px;
             height: 660px;
-            background: #1e293b;
+            background: var(--dark-color);
             border-radius: 40px;
             padding: 15px;
             position: relative;
@@ -508,7 +616,7 @@
         .iphone-screen {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border-radius: 30px;
             overflow: hidden;
             position: relative;
@@ -669,6 +777,18 @@
             .nav-links {
                 display: none;
             }
+
+            .header-controls {
+                gap: 10px;
+            }
+
+            .download-cv span {
+                display: none;
+            }
+
+            .download-cv {
+                padding: 8px 12px;
+            }
         }
     </style>
 </head>
@@ -686,6 +806,24 @@
                 <li><a href="#certifications">Certificaciones</a></li>
                 <li><a href="#contact">Contacto</a></li>
             </ul>
+            <div class="header-controls">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="language-selector">
+                    <button class="language-btn">
+                        <i class="fas fa-globe"></i> ES
+                    </button>
+                    <div class="language-dropdown" id="language-dropdown">
+                        <div class="language-option" data-lang="es">Español</div>
+                        <div class="language-option" data-lang="en">English</div>
+                    </div>
+                </div>
+                <a href="Javier_Torres_Rubio_CV_ES.pdf" class="download-cv" download>
+                    <i class="fas fa-download"></i>
+                    <span>CV</span>
+                </a>
+            </div>
         </nav>
     </header>
 
@@ -695,23 +833,28 @@
             <div class="animated-bg"></div>
         </div>
         <div class="container hero-content">
-            <div class="hero-img">
+            <div class="hero-img" data-aos="zoom-in">
                 <i class="fas fa-user"></i>
             </div>
-            <h1>Javier Torres Rubio</h1>
-            <p>Analista de Riesgos Cuantitativos &amp; Desarrollador de Modelos Financieros</p>
-            <a href="#contact" class="btn">Contactar</a>
+            <h1 data-aos="fade-up" data-aos-delay="200">Javier Torres Rubio</h1>
+            <p data-aos="fade-up" data-aos-delay="300">Analista de Riesgos Cuantitativos &amp; Desarrollador de Modelos Financieros</p>
+            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="400">
+                <a href="#contact" class="btn">Contactar</a>
+                <a href="Javier_Torres_Rubio_CV_ES.pdf" class="btn btn-outline" download>
+                    <i class="fas fa-download"></i> Descargar CV
+                </a>
+            </div>
         </div>
     </section>
 
     <!-- Sobre Mí -->
     <section id="about">
         <div class="container">
-            <h2 class="section-title">Sobre Mí</h2>
-            <div class="about-content" style="background: var(--glass-bg); backdrop-filter: blur(10px); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
-                <p style="margin-bottom: 1.5rem; font-size: 1.2rem;">Soy un analista de riesgos en formación con experiencia en BNP Paribas CIB, especializado en modelos cuantitativos de riesgo (VaR, Stress Testing) y su automatización con R/VBA.</p>
-                <p style="margin-bottom: 1.5rem; font-size: 1.2rem;">Mi perfil técnico combina formación estadística/matemática (Máster en Ciencias Actuariales) y económica (Grado en Economía Financiera y Actuarial).</p>
-                <p style="font-size: 1.2rem;">Destaco por mis matrículas de honor en áreas clave como Finanzas Corporativas, Procesos Estocásticos y Series Temporales.</p>
+            <h2 class="section-title" data-aos="fade-up">Sobre Mí</h2>
+            <div class="about-content" data-aos="fade-up" data-aos-delay="200">
+                <p>Soy un analista de riesgos en formación con experiencia en BNP Paribas CIB, especializado en modelos cuantitativos de riesgo (VaR, Stress Testing) y su automatización con R/VBA.</p>
+                <p>Mi perfil técnico combina formación estadística/matemática (Máster en Ciencias Actuariales) y económica (Grado en Economía Financiera y Actuarial).</p>
+                <p>Destaco por mis matrículas de honor en áreas clave como Finanzas Corporativas, Procesos Estocásticos y Series Temporales.</p>
             </div>
         </div>
     </section>
@@ -719,23 +862,23 @@
     <!-- Timeline -->
     <section id="timeline">
         <div class="container">
-            <h2 class="section-title">Mi Trayectoria</h2>
+            <h2 class="section-title" data-aos="fade-up">Mi Trayectoria</h2>
             <div class="timeline">
-                <div class="timeline-item">
+                <div class="timeline-item" data-aos="fade-right">
                     <div class="timeline-content">
                         <span class="timeline-date">2024 - 2026 (Previsto)</span>
                         <h3 class="timeline-title">Máster en Ciencias Actuariales y Financieras</h3>
                         <p class="timeline-desc">Universidad Carlos III de Madrid. Formación avanzada en valoración de derivados, técnicas estadísticas y procesos estocásticos.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item" data-aos="fade-left">
                     <div class="timeline-content">
                         <span class="timeline-date">Mar 2024 – Ago 2024</span>
                         <h3 class="timeline-title">Analista - BNP Paribas CIB</h3>
                         <p class="timeline-desc">Gestión de operaciones bursátiles, compliance, verificación de pagos de dividendos y monitoreo del índice Euribor.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item" data-aos="fade-right">
                     <div class="timeline-content">
                         <span class="timeline-date">2020 – 2024</span>
                         <h3 class="timeline-title">Grado en Economía Financiera y Actuarial</h3>
@@ -749,9 +892,9 @@
     <!-- Competencias -->
     <section id="competencies">
         <div class="container">
-            <h2 class="section-title">Competencias</h2>
+            <h2 class="section-title" data-aos="fade-up">Competencias</h2>
             <div class="competencies-container">
-                <div class="competency-category">
+                <div class="competency-category" data-aos="fade-up" data-aos-delay="200">
                     <h3 class="category-title"><i class="fas fa-chart-line"></i> Análisis de Riesgo</h3>
                     <ul class="competency-list">
                         <li class="competency-item"><i class="fas fa-check"></i> Value at Risk (VaR)</li>
@@ -760,7 +903,7 @@
                         <li class="competency-item"><i class="fas fa-check"></i> Gestión de Operaciones Bursátiles</li>
                     </ul>
                 </div>
-                <div class="competency-category">
+                <div class="competency-category" data-aos="fade-up" data-aos-delay="300">
                     <h3 class="category-title"><i class="fas fa-code"></i> Programación</h3>
                     <ul class="competency-list">
                         <li class="competency-item"><i class="fas fa-check"></i> R</li>
@@ -769,7 +912,7 @@
                         <li class="competency-item"><i class="fas fa-check"></i> Python</li>
                     </ul>
                 </div>
-                <div class="competency-category">
+                <div class="competency-category" data-aos="fade-up" data-aos-delay="400">
                     <h3 class="category-title"><i class="fas fa-calculator"></i> Análisis Cuantitativo</h3>
                     <ul class="competency-list">
                         <li class="competency-item"><i class="fas fa-check"></i> Procesos Estocásticos</li>
@@ -785,39 +928,39 @@
     <!-- Reconocimientos -->
     <section id="awards">
         <div class="container">
-            <h2 class="section-title">Reconocimientos y Premios</h2>
+            <h2 class="section-title" data-aos="fade-up">Reconocimientos y Premios</h2>
             <div class="awards-container">
-                <div class="award-item">
+                <div class="award-item" data-aos="fade-up" data-aos-delay="200">
                     <h3 class="award-title">Matrícula de Honor en Contabilidad de Entidades de Seguros</h3>
                     <div class="award-issuer">Universidad Carlos III de Madrid</div>
                     <div class="award-date">Enero 2025</div>
                     <p class="award-desc">Expedida por UC3M</p>
                 </div>
-                <div class="award-item">
+                <div class="award-item" data-aos="fade-up" data-aos-delay="300">
                     <h3 class="award-title">Matrícula de Honor en Prácticas Externas</h3>
                     <div class="award-issuer">Universidad Rey Juan Carlos</div>
                     <div class="award-date">Junio 2024</div>
                     <p class="award-desc">Expedida por URJC</p>
                 </div>
-                <div class="award-item">
+                <div class="award-item" data-aos="fade-up" data-aos-delay="400">
                     <h3 class="award-title">Matrícula de Honor en Dirección de Ventas</h3>
                     <div class="award-issuer">Universidad Rey Juan Carlos</div>
                     <div class="award-date">Mayo 2023</div>
                     <p class="award-desc">Expedida por URJC</p>
                 </div>
-                <div class="award-item">
+                <div class="award-item" data-aos="fade-up" data-aos-delay="500">
                     <h3 class="award-title">Matrícula de Honor en Finanzas Corporativas</h3>
                     <div class="award-issuer">Universidad Rey Juan Carlos</div>
                     <div class="award-date">Mayo 2023</div>
                     <p class="award-desc">Expedida por URJC</p>
                 </div>
-                <div class="award-item">
+                <div class="award-item" data-aos="fade-up" data-aos-delay="600">
                     <h3 class="award-title">Matrícula de Honor en Introducción a la Estadística</h3>
                     <div class="award-issuer">Universidad Rey Juan Carlos</div>
                     <div class="award-date">Enero 2022</div>
                     <p class="award-desc">Expedida por URJC</p>
                 </div>
-                <div class="award-item">
+                <div class="award-item" data-aos="fade-up" data-aos-delay="700">
                     <h3 class="award-title">Matrícula de Honor en Introducción al Derecho</h3>
                     <div class="award-issuer">Universidad Rey Juan Carlos</div>
                     <div class="award-date">Enero 2021</div>
@@ -830,9 +973,9 @@
     <!-- Certificaciones -->
     <section id="certifications">
         <div class="container">
-            <h2 class="section-title">Licencias y Certificaciones</h2>
+            <h2 class="section-title" data-aos="fade-up">Licencias y Certificaciones</h2>
             <div class="certs-container">
-                <div class="cert-item">
+                <div class="cert-item" data-aos="fade-up" data-aos-delay="200">
                     <h3 class="cert-title">Global Private Bank Job Simulation</h3>
                     <div class="cert-issuer">JPMorgan Chase</div>
                     <div class="cert-date">Noviembre 2023</div>
@@ -845,7 +988,7 @@
                         <span class="skill-tag">Relationship Skills</span>
                     </div>
                 </div>
-                <div class="cert-item">
+                <div class="cert-item" data-aos="fade-up" data-aos-delay="300">
                     <h3 class="cert-title">FCE B2 First</h3>
                     <div class="cert-issuer">Cambridge University Press & Assessment</div>
                     <div class="cert-date">Septiembre 2023</div>
@@ -853,7 +996,7 @@
                         <span class="skill-tag">English</span>
                     </div>
                 </div>
-                <div class="cert-item">
+                <div class="cert-item" data-aos="fade-up" data-aos-delay="400">
                     <h3 class="cert-title">SAS Programming 1: Essentials</h3>
                     <div class="cert-issuer">SAS</div>
                     <div class="cert-date">Julio 2023</div>
@@ -861,12 +1004,12 @@
                         <span class="skill-tag">SAS Base</span>
                     </div>
                 </div>
-                <div class="cert-item">
+                <div class="cert-item" data-aos="fade-up" data-aos-delay="500">
                     <h3 class="cert-title">SAS Programming for R Users</h3>
                     <div class="cert-issuer">SAS</div>
                     <div class="cert-date">Junio 2023</div>
                 </div>
-                <div class="cert-item">
+                <div class="cert-item" data-aos="fade-up" data-aos-delay="600">
                     <h3 class="cert-title">Data Literacy Essentials</h3>
                     <div class="cert-issuer">SAS</div>
                     <div class="cert-date">Mayo 2023</div>
@@ -874,12 +1017,12 @@
                         <span class="skill-tag">Alfabetización</span>
                     </div>
                 </div>
-                <div class="cert-item">
+                <div class="cert-item" data-aos="fade-up" data-aos-delay="700">
                     <h3 class="cert-title">Comercio Electrónico</h3>
                     <div class="cert-issuer">Google Activate</div>
                     <div class="cert-date">Julio 2022</div>
                 </div>
-                <div class="cert-item">
+                <div class="cert-item" data-aos="fade-up" data-aos-delay="800">
                     <h3 class="cert-title">Fundamentos Marketing Digital</h3>
                     <div class="cert-issuer">Google Activate</div>
                     <div class="cert-date">Junio 2022</div>
@@ -891,9 +1034,9 @@
     <!-- Contacto - iPhone -->
     <section id="contact">
         <div class="container">
-            <h2 class="section-title">Contacto</h2>
+            <h2 class="section-title" data-aos="fade-up">Contacto</h2>
             <div class="iphone-container">
-                <div class="iphone">
+                <div class="iphone" data-aos="flip-left" data-aos-delay="300">
                     <div class="iphone-screen">
                         <div class="dynamic-island"></div>
                         <div class="notifications-container" id="notifications-container">
@@ -921,7 +1064,16 @@
         </div>
     </footer>
 
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
         // Efecto de scroll para el header
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
@@ -932,35 +1084,87 @@
             }
         });
 
-        // Animación de aparición al hacer scroll
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
+        // Toggle de tema claro/oscuro
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Comprobar si hay una preferencia guardada
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+        // Selector de idioma
+        const languageBtn = document.querySelector('.language-btn');
+        const languageDropdown = document.getElementById('language-dropdown');
+        const downloadCvBtn = document.querySelector('.download-cv');
+        const downloadCvBtnLarge = document.querySelector('.hero-buttons .btn-outline');
+        
+        languageBtn.addEventListener('click', () => {
+            languageDropdown.classList.toggle('show');
+        });
+        
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const lang = option.getAttribute('data-lang');
+                languageDropdown.classList.remove('show');
+                
+                // Cambiar el texto del botón
+                languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${lang.toUpperCase()}`;
+                
+                // Cambiar el CV para descargar según el idioma
+                if (lang === 'en') {
+                    downloadCvBtn.href = 'Javier_Torres_Rubio_CV_ENG.pdf';
+                    if (downloadCvBtnLarge) {
+                        downloadCvBtnLarge.href = 'Javier_Torres_Rubio_CV_ENG.pdf';
+                    }
+                } else {
+                    downloadCvBtn.href = 'Javier_Torres_Rubio_CV_ES.pdf';
+                    if (downloadCvBtnLarge) {
+                        downloadCvBtnLarge.href = 'Javier_Torres_Rubio_CV_ES.pdf';
+                    }
                 }
+                
+                // Aquí puedes agregar la lógica para cambiar todo el contenido del sitio al idioma seleccionado
+                // Por ahora solo cambia el CV para descargar
             });
-        }, observerOptions);
-
-        // Observar elementos de la timeline
-        document.querySelectorAll('.timeline-item').forEach(item => {
-            observer.observe(item);
+        });
+        
+        // Cerrar dropdown al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+                languageDropdown.classList.remove('show');
+            }
         });
 
         // Efecto de rotación 3D para el iPhone
         const iphone = document.querySelector('.iphone');
-        document.addEventListener('mousemove', (e) => {
-            if (iphone) {
+        if (iphone) {
+            document.addEventListener('mousemove', (e) => {
                 const x = (window.innerWidth / 2 - e.clientX) / 25;
                 const y = (window.innerHeight / 2 - e.clientY) / 25;
                 iphone.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-            }
-        });
+            });
+        }
 
         // Sistema de notificaciones para el iPhone
         const notifications = [
@@ -1022,7 +1226,7 @@
             notificationEl.className = 'notification';
             notificationEl.innerHTML = `
                 <div class="notification-icon ${notificationData.type}">
-                    <i class="fab fa-${notificationData.type}"></i>
+                    <i class="fab fa-${notificationData.type === 'call' ? 'phone' : notificationData.type}"></i>
                 </div>
                 <div class="notification-content">
                     <div class="notification-app">${notificationData.app}</div>
