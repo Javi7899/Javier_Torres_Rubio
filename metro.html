@@ -15,8 +15,8 @@
             --background-color: #f8fafc;
             --text-color: #1e293b;
             --card-bg: #ffffff;
-            --station-size: 24px;
-            --line-width: 10px;
+            --line-width: 8px;
+            --station-size: 40px;
         }
 
         [data-theme="dark"] {
@@ -35,143 +35,181 @@
         body {
             background-color: var(--background-color);
             color: var(--text-color);
-            padding: 20px;
             transition: background-color 0.3s, color 0.3s;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
+            margin-bottom: 60px;
+            padding: 40px 20px;
         }
 
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            margin-bottom: 20px;
             color: var(--text-color);
         }
 
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             opacity: 0.8;
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .scroll-indicator {
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            color: var(--text-color);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
         }
 
         .metro-container {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: auto;
             position: relative;
-            min-height: 600px;
+            display: flex;
+            justify-content: center;
+            min-height: 3000px;
+            margin-bottom: 100px;
         }
 
-        .metro-map {
-            position: relative;
-            width: 100%;
-            height: 500px;
-        }
-
-        /* Líneas del metro */
         .metro-line {
             position: absolute;
-            height: var(--line-width);
-            border-radius: 10px;
-            transform-origin: left center;
+            width: var(--line-width);
+            background: linear-gradient(to bottom, #ccc, #ccc);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            transition: background-size 0.1s;
         }
 
-        .line-finance {
-            background-color: var(--finance-color);
-            top: 20%;
-            left: 5%;
-            width: 90%;
+        .line-progress {
+            background: linear-gradient(to bottom, var(--finance-color), var(--finance-color));
+            background-size: 100% 0%;
+            background-repeat: no-repeat;
+            position: absolute;
+            width: var(--line-width);
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            transition: background-size 0.5s ease-out;
         }
 
-        .line-programming {
-            background-color: var(--programming-color);
-            top: 40%;
-            left: 5%;
-            width: 90%;
+        .stations-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
 
-        .line-math {
-            background-color: var(--math-color);
-            top: 60%;
-            left: 5%;
-            width: 90%;
-        }
-
-        .line-economics {
-            background-color: var(--economics-color);
-            top: 80%;
-            left: 5%;
-            width: 90%;
-        }
-
-        /* Estaciones */
         .station {
             position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
             width: var(--station-size);
             height: var(--station-size);
             border-radius: 50%;
-            background-color: white;
-            border: 4px solid;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
-            z-index: 20;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .station:hover {
-            transform: translate(-50%, -50%) scale(1.3);
-            z-index: 30;
-        }
-
-        .station.finance { border-color: var(--finance-color); }
-        .station.programming { border-color: var(--programming-color); }
-        .station.math { border-color: var(--math-color); }
-        .station.economics { border-color: var(--economics-color); }
-
-        .station-label {
-            position: absolute;
-            font-size: 0.9rem;
-            font-weight: 500;
-            padding: 6px 12px;
-            border-radius: 6px;
             background-color: var(--card-bg);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            white-space: nowrap;
-            pointer-events: none;
+            border: 4px solid #ccc;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: all 0.5s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .station.active {
+            border-width: 6px;
+            transform: translateX(-50%) scale(1.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .station.finance.active { border-color: var(--finance-color); background-color: var(--finance-color); }
+        .station.programming.active { border-color: var(--programming-color); background-color: var(--programming-color); }
+        .station.math.active { border-color: var(--math-color); background-color: var(--math-color); }
+        .station.economics.active { border-color: var(--economics-color); background-color: var(--economics-color); }
+
+        .station-content {
+            position: absolute;
+            left: calc(50% + 40px);
+            width: 400px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 25;
-            max-width: 200px;
-            text-align: center;
+            transform: translateX(20px);
+            transition: all 0.5s ease;
+            z-index: 5;
         }
 
-        .station-label-top {
-            bottom: calc(var(--station-size) + 10px);
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .station-label-bottom {
-            top: calc(var(--station-size) + 10px);
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .station:hover .station-label {
+        .station-content.active {
             opacity: 1;
+            transform: translateX(0);
+        }
+
+        .station-content.finance { border-left: 5px solid var(--finance-color); }
+        .station-content.programming { border-left: 5px solid var(--programming-color); }
+        .station-content.math { border-left: 5px solid var(--math-color); }
+        .station-content.economics { border-left: 5px solid var(--economics-color); }
+
+        .station-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .station-type {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            color: white;
+            font-weight: 500;
+        }
+
+        .station-type.finance { background-color: var(--finance-color); }
+        .station-type.programming { background-color: var(--programming-color); }
+        .station-type.math { background-color: var(--math-color); }
+        .station-type.economics { background-color: var(--economics-color); }
+
+        .station-description {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .station-date {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .alternate {
+            left: calc(50% - 40px);
+            transform: translateX(-100%);
+        }
+
+        .alternate.active {
+            transform: translateX(-100%);
         }
 
         /* Leyenda */
@@ -180,89 +218,31 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 20px;
-            margin-top: 40px;
-            padding: 20px;
+            margin: 60px 0;
+            padding: 25px;
             background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 16px;
-            border-radius: 8px;
+            gap: 12px;
+            padding: 10px 20px;
+            border-radius: 10px;
             background-color: rgba(0, 0, 0, 0.05);
         }
 
         .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
         }
 
         .legend-text {
-            font-weight: 500;
-            font-size: 1rem;
-        }
-
-        /* Panel de detalles */
-        .station-details {
-            position: fixed;
-            bottom: -100%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 500px;
-            background: var(--card-bg);
-            border-radius: 16px 16px 0 0;
-            padding: 24px;
-            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15);
-            z-index: 100;
-            transition: bottom 0.4s ease;
-        }
-
-        .station-details.active {
-            bottom: 0;
-        }
-
-        .close-details {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-color);
-        }
-
-        .details-title {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-            color: var(--text-color);
-        }
-
-        .details-type {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            margin-bottom: 16px;
-            color: white;
-            font-weight: 500;
-        }
-
-        .details-description {
-            margin-bottom: 16px;
-            line-height: 1.6;
-        }
-
-        .details-date {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            font-style: italic;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
 
         /* Toggle de tema */
@@ -279,41 +259,40 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            z-index: 90;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 100;
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
+        @media (max-width: 900px) {
+            .station-content {
+                width: 300px;
             }
-            
+        }
+
+        @media (max-width: 768px) {
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .subtitle {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             
-            .metro-container {
-                padding: 15px;
+            .station-content {
+                width: 250px;
+                left: calc(50% + 30px);
             }
             
-            .metro-map {
-                height: 400px;
-            }
-            
-            .station-label {
-                font-size: 0.8rem;
-                max-width: 150px;
+            .alternate {
+                left: calc(50% - 30px);
+                transform: translateX(-100%);
             }
             
             .legend {
                 flex-direction: column;
                 align-items: center;
-                gap: 12px;
+                gap: 15px;
             }
             
             .legend-item {
@@ -322,26 +301,42 @@
             }
         }
 
-        /* Mejoras para el mapa */
-        .line-name {
-            position: absolute;
-            font-weight: bold;
-            font-size: 0.9rem;
-            padding: 4px 10px;
-            border-radius: 4px;
-            color: white;
-            z-index: 10;
+        @media (max-width: 600px) {
+            .station-content {
+                position: relative;
+                left: 0;
+                width: 100%;
+                margin: 20px 0;
+                transform: none;
+            }
+            
+            .station-content.active {
+                transform: none;
+            }
+            
+            .alternate {
+                left: 0;
+                transform: none;
+            }
+            
+            .metro-line, .line-progress {
+                left: 30px;
+            }
+            
+            .station {
+                left: 30px;
+            }
         }
 
-        .connection {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: var(--card-bg);
-            border: 3px solid #64748b;
-            z-index: 15;
-            transform: translate(-50%, -50%);
+        /* Animación de progreso */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        .station.active.pulse {
+            animation: pulse 2s infinite;
         }
     </style>
 </head>
@@ -349,41 +344,39 @@
     <div class="container">
         <header>
             <h1>Metro del Conocimiento</h1>
-            <p class="subtitle">Explora mi trayectoria de aprendizaje a través de esta representación visual inspirada en los mapas de metro</p>
+            <p class="subtitle">Desplázate para explorar mi trayectoria formativa y profesional</p>
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
         </header>
         
         <div class="metro-container">
-            <div class="metro-map" id="metro-map">
-                <!-- Líneas y estaciones se generarán con JavaScript -->
+            <div class="metro-line"></div>
+            <div class="line-progress" id="line-progress"></div>
+            
+            <div class="stations-container" id="stations-container">
+                <!-- Las estaciones se generarán con JavaScript -->
             </div>
         </div>
         
         <div class="legend">
             <div class="legend-item">
                 <div class="legend-color" style="background-color: var(--finance-color);"></div>
-                <span class="legend-text">Línea Finanzas y Risk Modeling</span>
+                <span class="legend-text">Finanzas y Risk Modeling</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: var(--programming-color);"></div>
-                <span class="legend-text">Línea Programación y Tecnología</span>
+                <span class="legend-text">Programación y Tecnología</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: var(--math-color);"></div>
-                <span class="legend-text">Línea Matemáticas y Estadística</span>
+                <span class="legend-text">Matemáticas y Estadística</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: var(--economics-color);"></div>
-                <span class="legend-text">Línea Economía y Negocios</span>
+                <span class="legend-text">Economía y Negocios</span>
             </div>
         </div>
-    </div>
-    
-    <div class="station-details" id="station-details">
-        <button class="close-details" id="close-details">&times;</button>
-        <h2 class="details-title" id="details-title">Título de la estación</h2>
-        <span class="details-type" id="details-type">Tipo</span>
-        <p class="details-description" id="details-description">Descripción de la estación.</p>
-        <p class="details-date" id="details-date">Fecha</p>
     </div>
     
     <button class="theme-toggle" id="theme-toggle">
@@ -392,310 +385,268 @@
 
     <script>
         // Datos para el mapa del metro
-        const metroData = {
-            lines: [
-                {
-                    id: "finance",
-                    name: "Finanzas y Risk Modeling",
-                    color: "var(--finance-color)",
-                    stations: [
-                        {
-                            id: "finance-1",
-                            name: "Grado Economía Financiera",
-                            description: "Formación base en principios económicos y financieros, sentando las bases para el análisis de riesgos.",
-                            date: "2020-2024",
-                            type: "Educación",
-                            position: 10
-                        },
-                        {
-                            id: "finance-2",
-                            name: "BNP Paribas CIB",
-                            description: "Experiencia práctica en gestión de operaciones bursátiles, compliance y verificación de pagos de dividendos.",
-                            date: "Mar 2024 – Ago 2024",
-                            type: "Experiencia",
-                            position: 30
-                        },
-                        {
-                            id: "finance-3",
-                            name: "Máster Ciencias Actuariales",
-                            description: "Formación avanzada en valoración de derivados, técnicas estadísticas y procesos estocásticos.",
-                            date: "2024-2026",
-                            type: "Educación",
-                            position: 50
-                        },
-                        {
-                            id: "finance-4",
-                            name: "Value at Risk (VaR)",
-                            description: "Desarrollo de modelos cuantitativos avanzados para el cálculo de Value at Risk.",
-                            date: "Competencia clave",
-                            type: "Habilidad",
-                            position: 70
-                        },
-                        {
-                            id: "finance-5",
-                            name: "Stress Testing",
-                            description: "Especialización en pruebas de estrés para carteras de inversión.",
-                            date: "Competencia clave",
-                            type: "Habilidad",
-                            position: 90
-                        }
-                    ]
-                },
-                {
-                    id: "programming",
-                    name: "Programación y Tecnología",
-                    color: "var(--programming-color)",
-                    stations: [
-                        {
-                            id: "programming-1",
-                            name: "R Estadístico",
-                            description: "Desarrollo de scripts y modelos de análisis en R para tratamiento de datos financieros.",
-                            date: "Competencia avanzada",
-                            type: "Habilidad",
-                            position: 15
-                        },
-                        {
-                            id: "programming-2",
-                            name: "VBA Macros",
-                            description: "Automatización de procesos y reportes en Excel mediante VBA.",
-                            date: "Competencia avanzada",
-                            type: "Habilidad",
-                            position: 35
-                        },
-                        {
-                            id: "programming-3",
-                            name: "Python Financiero",
-                            description: "Desarrollo de modelos predictivos y análisis de datos con Pandas, NumPy y SciPy.",
-                            date: "Competencia intermedia",
-                            type: "Habilidad",
-                            position: 55
-                        },
-                        {
-                            id: "programming-4",
-                            name: "SAS Programming",
-                            description: "Manejo de SAS para análisis estadístico y gestión de datos.",
-                            date: "Certificación SAS",
-                            type: "Certificación",
-                            position: 75
-                        }
-                    ]
-                },
-                {
-                    id: "math",
-                    name: "Matemáticas y Estadística",
-                    color: "var(--math-color)",
-                    stations: [
-                        {
-                            id: "math-1",
-                            name: "Procesos Estocásticos",
-                            description: "Matrícula de Honor. Modelización de sistemas que evolucionan de forma aleatoria en el tiempo.",
-                            date: "2023",
-                            type: "Educación",
-                            position: 20
-                        },
-                        {
-                            id: "math-2",
-                            name: "Series Temporales",
-                            description: "Matrícula de Honor. Análisis y predicción de datos ordenados en el tiempo.",
-                            date: "2023",
-                            type: "Educación",
-                            position: 40
-                        },
-                        {
-                            id: "math-3",
-                            name: "Estadística Avanzada",
-                            description: "Base sólida en métodos estadísticos aplicados a las finanzas.",
-                            date: "2022",
-                            type: "Educación",
-                            position: 60
-                        },
-                        {
-                            id: "math-4",
-                            name: "Modelos Predictivos",
-                            description: "Desarrollo de modelos con 78% de precisión en predicción de mercados.",
-                            date: "Proyecto destacado",
-                            type: "Habilidad",
-                            position: 80
-                        }
-                    ]
-                },
-                {
-                    id: "economics",
-                    name: "Economía y Negocios",
-                    color: "var(--economics-color)",
-                    stations: [
-                        {
-                            id: "economics-1",
-                            name: "Finanzas Corporativas",
-                            description: "Matrícula de Honor. Gestión financiera de empresas y análisis de inversiones.",
-                            date: "2023",
-                            type: "Educación",
-                            position: 25
-                        },
-                        {
-                            id: "economics-2",
-                            name: "Dirección de Ventas",
-                            description: "Matrícula de Honor. Estrategias comerciales y gestión de equipos.",
-                            date: "2023",
-                            type: "Educación",
-                            position: 45
-                        },
-                        {
-                            id: "economics-3",
-                            name: "JPMorgan Simulation",
-                            description: "Simulación de banca privada con foco en resolución de problemas y habilidades técnicas.",
-                            date: "Nov 2023",
-                            type: "Certificación",
-                            position: 65
-                        },
-                        {
-                            id: "economics-4",
-                            name: "Marketing Digital",
-                            description: "Fundamentos de marketing digital y comercio electrónico.",
-                            date: "Google Activate, 2022",
-                            type: "Certificación",
-                            position: 85
-                        }
-                    ]
-                }
-            ],
-            connections: [
-                { from: "finance-2", to: "programming-2" },
-                { from: "programming-3", to: "math-4" },
-                { from: "math-1", to: "finance-4" },
-                { from: "economics-1", to: "finance-1" }
-            ]
-        };
+        const metroData = [
+            {
+                id: "finance-1",
+                name: "Grado Economía Financiera",
+                description: "Formación base en principios económicos y financieros, sentando las bases para el análisis de riesgos.",
+                date: "2020-2024",
+                type: "Educación",
+                line: "finance",
+                position: 5
+            },
+            {
+                id: "economics-1",
+                name: "Finanzas Corporativas",
+                description: "Matrícula de Honor. Gestión financiera de empresas y análisis de inversiones.",
+                date: "2023",
+                type: "Educación",
+                line: "economics",
+                position: 10,
+                alternate: true
+            },
+            {
+                id: "programming-1",
+                name: "R Estadístico",
+                description: "Desarrollo de scripts y modelos de análisis en R para tratamiento de datos financieros.",
+                date: "Competencia avanzada",
+                type: "Habilidad",
+                line: "programming",
+                position: 15
+            },
+            {
+                id: "math-1",
+                name: "Procesos Estocásticos",
+                description: "Matrícula de Honor. Modelización de sistemas que evolucionan de forma aleatoria en el tiempo.",
+                date: "2023",
+                type: "Educación",
+                line: "math",
+                position: 20,
+                alternate: true
+            },
+            {
+                id: "finance-2",
+                name: "BNP Paribas CIB",
+                description: "Experiencia práctica en gestión de operaciones bursátiles, compliance y verificación de pagos de dividendos.",
+                date: "Mar 2024 – Ago 2024",
+                type: "Experiencia",
+                line: "finance",
+                position: 25
+            },
+            {
+                id: "programming-2",
+                name: "VBA Macros",
+                description: "Automatización de procesos y reportes en Excel mediante VBA.",
+                date: "Competencia avanzada",
+                type: "Habilidad",
+                line: "programming",
+                position: 30,
+                alternate: true
+            },
+            {
+                id: "economics-2",
+                name: "Dirección de Ventas",
+                description: "Matrícula de Honor. Estrategias comerciales y gestión de equipos.",
+                date: "2023",
+                type: "Educación",
+                line: "economics",
+                position: 35
+            },
+            {
+                id: "math-2",
+                name: "Series Temporales",
+                description: "Matrícula de Honor. Análisis y predicción de datos ordenados en el tiempo.",
+                date: "2023",
+                type: "Educación",
+                line: "math",
+                position: 40,
+                alternate: true
+            },
+            {
+                id: "finance-3",
+                name: "Máster Ciencias Actuariales",
+                description: "Formación avanzada en valoración de derivados, técnicas estadísticas y procesos estocásticos.",
+                date: "2024-2026",
+                type: "Educación",
+                line: "finance",
+                position: 45
+            },
+            {
+                id: "programming-3",
+                name: "Python Financiero",
+                description: "Desarrollo de modelos predictivos y análisis de datos con Pandas, NumPy y SciPy.",
+                date: "Competencia intermedia",
+                type: "Habilidad",
+                line: "programming",
+                position: 50,
+                alternate: true
+            },
+            {
+                id: "economics-3",
+                name: "JPMorgan Simulation",
+                description: "Simulación de banca privada con foco en resolución de problemas y habilidades técnicas.",
+                date: "Nov 2023",
+                type: "Certificación",
+                line: "economics",
+                position: 55
+            },
+            {
+                id: "math-3",
+                name: "Estadística Avanzada",
+                description: "Base sólida en métodos estadísticos aplicados a las finanzas.",
+                date: "2022",
+                type: "Educación",
+                line: "math",
+                position: 60,
+                alternate: true
+            },
+            {
+                id: "finance-4",
+                name: "Value at Risk (VaR)",
+                description: "Desarrollo de modelos cuantitativos avanzados para el cálculo de Value at Risk.",
+                date: "Competencia clave",
+                type: "Habilidad",
+                line: "finance",
+                position: 65
+            },
+            {
+                id: "programming-4",
+                name: "SAS Programming",
+                description: "Manejo de SAS para análisis estadístico y gestión de datos.",
+                date: "Certificación SAS",
+                type: "Certificación",
+                line: "programming",
+                position: 70,
+                alternate: true
+            },
+            {
+                id: "economics-4",
+                name: "Marketing Digital",
+                description: "Fundamentos de marketing digital y comercio electrónico.",
+                date: "Google Activate, 2022",
+                type: "Certificación",
+                line: "economics",
+                position: 75
+            },
+            {
+                id: "math-4",
+                name: "Modelos Predictivos",
+                description: "Desarrollo de modelos con 78% de precisión en predicción de mercados.",
+                date: "Proyecto destacado",
+                type: "Habilidad",
+                line: "math",
+                position: 80,
+                alternate: true
+            },
+            {
+                id: "finance-5",
+                name: "Stress Testing",
+                description: "Especialización en pruebas de estrés para carteras de inversión.",
+                date: "Competencia clave",
+                type: "Habilidad",
+                line: "finance",
+                position: 85
+            }
+        ];
 
         // Generar el mapa del metro
         function generateMetroMap() {
-            const metroMap = document.getElementById('metro-map');
+            const stationsContainer = document.getElementById('stations-container');
             
-            // Crear líneas
-            metroData.lines.forEach((line, index) => {
-                const lineEl = document.createElement('div');
-                lineEl.className = `metro-line line-${line.id}`;
-                metroMap.appendChild(lineEl);
+            // Crear estaciones
+            metroData.forEach(station => {
+                // Crear estación
+                const stationEl = document.createElement('div');
+                stationEl.className = `station ${station.line}`;
+                stationEl.id = `station-${station.id}`;
+                stationEl.style.top = `${station.position}%`;
+                stationsContainer.appendChild(stationEl);
                 
-                // Añadir nombre de la línea
-                const lineNameEl = document.createElement('div');
-                lineNameEl.className = 'line-name';
-                lineNameEl.textContent = line.name;
-                lineNameEl.style.backgroundColor = line.color;
-                lineNameEl.style.top = `${(index * 20) + 20}%`;
-                lineNameEl.style.left = '5%';
-                metroMap.appendChild(lineNameEl);
+                // Crear contenido de la estación
+                const contentEl = document.createElement('div');
+                contentEl.className = `station-content ${station.line} ${station.alternate ? 'alternate' : ''}`;
+                contentEl.id = `content-${station.id}`;
+                contentEl.style.top = `${station.position}%`;
+                contentEl.innerHTML = `
+                    <h3 class="station-title">${station.name}</h3>
+                    <div class="station-type ${station.line}">${station.type}</div>
+                    <p class="station-description">${station.description}</p>
+                    <p class="station-date">${station.date}</p>
+                `;
+                stationsContainer.appendChild(contentEl);
+            });
+        }
+        
+        // Controlar animación de scroll
+        function setupScrollAnimation() {
+            const progressLine = document.getElementById('line-progress');
+            const stations = document.querySelectorAll('.station');
+            const contents = document.querySelectorAll('.station-content');
+            
+            // Calcular puntos de activación
+            const activationPoints = metroData.map(station => {
+                const element = document.getElementById(`station-${station.id}`);
+                const rect = element.getBoundingClientRect();
+                return window.pageYOffset + rect.top - window.innerHeight * 0.8;
+            });
+            
+            window.addEventListener('scroll', () => {
+                const scrollPosition = window.scrollY;
+                const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = scrollPosition / documentHeight;
                 
-                // Crear estaciones
-                line.stations.forEach(station => {
-                    const stationEl = document.createElement('div');
-                    stationEl.className = `station ${line.id}`;
-                    stationEl.style.left = `${station.position}%`;
-                    stationEl.style.top = `${(index * 20) + 20}%`;
-                    stationEl.dataset.id = station.id;
-                    
-                    const labelEl = document.createElement('div');
-                    labelEl.className = 'station-label';
-                    labelEl.textContent = station.name;
-                    
-                    // Alternar posición de las etiquetas para evitar superposiciones
-                    if (index % 2 === 0) {
-                        labelEl.classList.add('station-label-top');
+                // Actualizar progreso de la línea
+                progressLine.style.backgroundSize = `100% ${scrollPercent * 100}%`;
+                
+                // Activar estaciones según scroll
+                activationPoints.forEach((point, index) => {
+                    if (scrollPosition >= point) {
+                        stations[index].classList.add('active', 'pulse');
+                        contents[index].classList.add('active');
                     } else {
-                        labelEl.classList.add('station-label-bottom');
+                        stations[index].classList.remove('active', 'pulse');
+                        contents[index].classList.remove('active');
                     }
-                    
-                    stationEl.appendChild(labelEl);
-                    metroMap.appendChild(stationEl);
-                    
-                    // Añadir evento de clic
-                    stationEl.addEventListener('click', () => showStationDetails(station, line));
                 });
             });
-            
-            // Crear conexiones
-            metroData.connections.forEach(conn => {
-                const fromStation = findStation(conn.from);
-                const toStation = findStation(conn.to);
-                
-                if (fromStation && toStation) {
-                    const fromLineIndex = metroData.lines.findIndex(line => 
-                        line.stations.some(s => s.id === fromStation.id));
-                    const toLineIndex = metroData.lines.findIndex(line => 
-                        line.stations.some(s => s.id === toStation.id));
-                    
-                    const connectionEl = document.createElement('div');
-                    connectionEl.className = 'connection';
-                    connectionEl.style.left = `${(fromStation.position + toStation.position) / 2}%`;
-                    connectionEl.style.top = `${((fromLineIndex * 20) + 20 + (toLineIndex * 20) + 20) / 2}%`;
-                    metroMap.appendChild(connectionEl);
-                }
-            });
-        }
-        
-        function findStation(id) {
-            for (const line of metroData.lines) {
-                for (const station of line.stations) {
-                    if (station.id === id) {
-                        return { ...station, line: line.id };
-                    }
-                }
-            }
-            return null;
-        }
-        
-        function showStationDetails(station, line) {
-            const details = document.getElementById('station-details');
-            const title = document.getElementById('details-title');
-            const type = document.getElementById('details-type');
-            const description = document.getElementById('details-description');
-            const date = document.getElementById('details-date');
-            
-            title.textContent = station.name;
-            type.textContent = station.type;
-            description.textContent = station.description;
-            date.textContent = station.date;
-            
-            type.style.backgroundColor = line.color;
-            
-            details.classList.add('active');
         }
         
         // Toggle de tema claro/oscuro
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = themeToggle.querySelector('i');
-        
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            if (savedTheme === 'dark') {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                if (savedTheme === 'dark') {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                }
             }
+            
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                if (currentTheme === 'dark') {
+                    document.documentElement.removeAttribute('data-theme');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
         }
         
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-                localStorage.setItem('theme', 'dark');
-            }
+        // Inicializar cuando se carga la página
+        window.addEventListener('load', () => {
+            generateMetroMap();
+            setupScrollAnimation();
+            setupThemeToggle();
         });
-        
-        // Cerrar detalles
-        document.getElementById('close-details').addEventListener('click', () => {
-            document.getElementById('station-details').classList.remove('active');
-        });
-        
-        // Inicializar el mapa cuando se carga la página
-        window.addEventListener('load', generateMetroMap);
     </script>
 </body>
 </html>
