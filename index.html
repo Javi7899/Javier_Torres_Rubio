@@ -15,8 +15,8 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
     <style>
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #0ea5e9;
+            --primary-color: #1a56db;
+            --secondary-color: #0c4a6e;
             --accent-color: #7e22ce;
             --dark-color: #1e293b;
             --light-color: #f8fafc;
@@ -249,7 +249,7 @@
             transform: translateY(-9px) rotate(-45deg);
         }
 
-        /* Hero Section */
+        /* Hero Section - Modificado */
         #hero {
             position: relative;
             padding-top: 8rem;
@@ -270,10 +270,38 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            background: linear-gradient(45deg, #0f172a, #1e293b, #334155);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            opacity: 0.8;
+            opacity: 0.95;
+        }
+
+        .stock-ticker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .stock-item {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: nowrap;
+            animation: floatStock 20s linear infinite;
+        }
+
+        @keyframes floatStock {
+            0% {
+                transform: translateY(100vh);
+            }
+            100% {
+                transform: translateY(-100px);
+            }
         }
 
         @keyframes gradientBG {
@@ -334,15 +362,15 @@
         .hero-content h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .hero-content p {
             font-size: 1.5rem;
             max-width: 700px;
             margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .hero-buttons {
@@ -373,13 +401,13 @@
 
         .btn-outline {
             background: transparent;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
+            border: 2px solid white;
+            color: white;
         }
 
         .btn-outline:hover {
-            background: var(--primary-color);
-            color: white;
+            background: white;
+            color: var(--primary-color);
         }
 
         /* Secciones generales */
@@ -452,6 +480,68 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        /* Nueva Sección de Proyectos Destacados (reemplaza Competencias) */
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .project-desc {
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .tech-tag {
+            background: rgba(37, 99, 235, 0.2);
+            color: var(--secondary-color);
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
         }
 
         /* Timeline */
@@ -539,60 +629,6 @@
 
         .timeline-item:nth-child(even)::after {
             left: -10px;
-        }
-
-        /* Nueva Sección de Competencias */
-        .competencies-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .competency-category {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 16px;
-            border: 1px solid var(--glass-border);
-            padding: 1.5rem;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .competency-category:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .category-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--secondary-color);
-            display: flex;
-            align-items: center;
-        }
-
-        .category-title i {
-            margin-right: 10px;
-            font-size: 1.5rem;
-        }
-
-        .competency-list {
-            list-style: none;
-        }
-
-        .competency-item {
-            padding: 0.5rem 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .competency-item i {
-            color: var(--secondary-color);
-            margin-right: 10px;
-            font-size: 0.9rem;
         }
 
         /* Sección de Reconocimientos */
@@ -702,22 +738,6 @@
             font-size: 0.8rem;
         }
 
-        /* Gráfico 3D de Habilidades */
-        .skills-3d-container {
-            width: 100%;
-            height: 400px;
-            margin: 2rem 0;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        #skills-3d-chart {
-            width: 100%;
-            height: 100%;
-            background: var(--card-bg);
-        }
-
         /* Simulador de Risk Modeling */
         .simulator-container {
             background: var(--card-bg);
@@ -777,7 +797,7 @@
             opacity: 0.9;
         }
 
-        /* Panel de Mercados Financieros */
+        /* Panel de Mercados Financieros - Modificado */
         .market-panel {
             background: var(--card-bg);
             border-radius: 16px;
@@ -786,37 +806,11 @@
             margin: 2rem 0;
         }
 
-        .market-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 1rem;
-        }
-
-        .market-tab {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            background: transparent;
-            border: none;
-            color: var(--text-color);
-            font-weight: 500;
-        }
-
-        .market-tab.active {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-        }
-
         .market-content {
-            min-height: 300px;
-        }
-
-        .market-data {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .market-card {
@@ -825,15 +819,25 @@
             border-radius: 12px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         .market-symbol {
             font-weight: 700;
             margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .market-name {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
         }
 
         .market-price {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 700;
             margin: 0.5rem 0;
         }
@@ -985,11 +989,17 @@
             border: 1px solid var(--glass-border);
             opacity: 0;
             transform: translateY(20px);
+            position: absolute;
         }
 
         .notification.show {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        .notification.hiding {
+            opacity: 0;
+            transform: translateY(-20px);
         }
 
         .notification-icon {
@@ -1201,10 +1211,6 @@
             .simulator-controls {
                 grid-template-columns: 1fr;
             }
-
-            .market-data {
-                grid-template-columns: 1fr;
-            }
         }
 
         @media (max-width: 480px) {
@@ -1260,7 +1266,7 @@
                 <li><a href="#hero">Inicio</a></li>
                 <li><a href="#about">Sobre Mí</a></li>
                 <li><a href="#timeline">Trayectoria</a></li>
-                <li><a href="#competencies">Competencias</a></li>
+                <li><a href="#projects">Proyectos</a></li>
                 <li><a href="#awards">Reconocimientos</a></li>
                 <li><a href="#certifications">Certificaciones</a></li>
                 <li><a href="#contact">Contacto</a></li>
@@ -1290,6 +1296,7 @@
     <section id="hero">
         <div class="hero-bg">
             <div class="animated-bg"></div>
+            <div class="stock-ticker" id="stock-ticker"></div>
         </div>
         <div class="container hero-content">
             <div class="avatar-3d" data-aos="zoom-in">
@@ -1348,10 +1355,8 @@
                     </div>
                 </div>
                 <div class="about-visual" data-aos="fade-left" data-aos-delay="200">
-                    <!-- Gráfico 3D de habilidades -->
-                    <div class="skills-3d-container">
-                        <div id="skills-3d-chart"></div>
-                    </div>
+                    <!-- Gráfico de habilidades con Chart.js -->
+                    <canvas id="skills-chart" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
@@ -1387,37 +1392,46 @@
         </div>
     </section>
 
-    <!-- Competencias -->
-    <section id="competencies">
+    <!-- Proyectos Destacados (reemplaza Competencias) -->
+    <section id="projects">
         <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Competencias</h2>
-            <div class="competencies-container">
-                <div class="competency-category" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="category-title"><i class="fas fa-chart-line"></i> Análisis de Riesgo</h3>
-                    <ul class="competency-list">
-                        <li class="competency-item"><i class="fas fa-check"></i> Value at Risk (VaR)</li>
-                        <li class="competency-item"><i class="fas fa-check"></i> Stress Testing</li>
-                        <li class="competency-item"><i class="fas fa-check"></i> Modelos Cuantitativos</li>
-                        <li class="competency-item"><i class="fas fa-check"></i> Gestión de Operaciones Bursátiles</li>
-                    </ul>
+            <h2 class="section-title" data-aos="fade-up">Proyectos Destacados</h2>
+            <div class="projects-container">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="project-title">Sistema de Análisis de Riesgo</h3>
+                    <p class="project-desc">Desarrollo de un sistema integral para calcular Value at Risk (VaR) y realizar pruebas de estrés para carteras de inversión.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">R</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">VBA</span>
+                    </div>
                 </div>
-                <div class="competency-category" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="category-title"><i class="fas fa-code"></i> Programación</h3>
-                    <ul class="competency-list">
-                        <li class="competency-item"><i class="fas fa-check"></i> R</li>
-                        <li class="competency-item"><i class="fas fa-check"></i> VBA</li>
-                        <li class="competency-item"><i class="fas fa-check"></i> SAS</li>
-                        <li class="competency-item"><i class="fas fa-check"></i> Python</li>
-                    </ul>
+                <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3 class="project-title">Modelo Predictivo de Mercados</h3>
+                    <p class="project-desc">Implementación de modelos de series temporales para predecir movimientos del mercado financiero con un 78% de precisión.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">ARIMA</span>
+                        <span class="tech-tag">Machine Learning</span>
+                    </div>
                 </div>
-                <div class="competency-category" data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="category-title"><i class="fas fa-calculator"></i> Análisis Cuantitativo</h3>
-                    <ul class="competency-list">
-                        <li class="competency-item"><i class="fas fa-check"></i> Procesos Estocásticos</li>
-                        <li class="competency-item"><i class="fas fa-check"></i> Series Temporales</li>
-                        <li class="competency-item"><i class="fas fa-check"></i> Estadística Avanzada</li>
-                        <li class="competency-item"><i class="fas fa-check"></i> Finanzas Corporativas</li>
-                    </ul>
+                <div class="project-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="project-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="project-title">Automatización de Reportes</h3>
+                    <p class="project-desc">Sistema automatizado para generar reportes financieros diarios, reduciendo el tiempo de producción en un 85%.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">VBA</span>
+                        <span class="tech-tag">SAS</span>
+                        <span class="tech-tag">Macros</span>
+                    </div>
                 </div>
             </div>
 
@@ -1567,23 +1581,14 @@
                 </div>
             </div>
 
-            <!-- Panel de Mercados Financieros -->
+            <!-- Panel de Mercados Financieros - Modificado -->
             <div class="market-panel" data-aos="fade-up" data-aos-delay="900">
-                <h3 class="section-title">Mercados Financieros en Tiempo Real</h3>
-                <div class="market-tabs">
-                    <button class="market-tab active" data-tab="stocks">Acciones</button>
-                    <button class="market-tab" data-tab="indices">Índices</button>
-                    <button class="market-tab" data-tab="forex">Divisas</button>
-                </div>
+                <h3 class="section-title">Mercado de Acciones en Tiempo Real</h3>
                 <div class="market-content">
-                    <div class="market-data" id="stocks-data">
-                        <!-- Los datos se cargarán mediante JavaScript -->
-                    </div>
-                    <div class="market-data" id="indices-data" style="display: none;">
-                        <!-- Los datos se cargarán mediante JavaScript -->
-                    </div>
-                    <div class="market-data" id="forex-data" style="display: none;">
-                        <!-- Los datos se cargarán mediante JavaScript -->
+                    <div class="market-card" id="stock-card">
+                        <div class="api-loader">
+                            <div class="spinner"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1776,7 +1781,7 @@
             });
         }
 
-        // Sistema de notificaciones para el iPhone (acumulativas)
+        // Sistema de notificaciones para el iPhone (siempre 3 visibles)
         const notifications = [
             {
                 app: 'LinkedIn',
@@ -1812,18 +1817,42 @@
                 time: 'Ayer',
                 type: 'job-offer',
                 action: () => window.open('https://linkedin.com/in/javier-torres-rubio', '_blank')
+            },
+            {
+                app: 'LinkedIn',
+                text: '+5 nuevas conexiones esta semana',
+                time: 'Hace 2 días',
+                type: 'linkedin',
+                action: () => window.open('https://linkedin.com/in/javier-torres-rubio', '_blank')
+            },
+            {
+                app: 'Email',
+                text: 'Invitación a evento de finanzas cuantitativas',
+                time: 'Hace 3 días',
+                type: 'email',
+                action: () => location.href='mailto:javiertorresrubio9@gmail.com'
             }
         ];
 
         const notificationsContainer = document.getElementById('notifications-container');
-        let currentNotification = 0;
+        let activeNotifications = [];
+        let notificationCounter = 0;
 
-        function showNextNotification() {
-            if (currentNotification >= notifications.length) return;
+        function showNotification() {
+            // Si ya hay 3 notificaciones, eliminar la más antigua
+            if (activeNotifications.length >= 3) {
+                const oldestNotification = activeNotifications.shift();
+                oldestNotification.classList.add('hiding');
+                setTimeout(() => {
+                    notificationsContainer.removeChild(oldestNotification);
+                }, 300);
+            }
 
-            const notificationData = notifications[currentNotification];
+            // Crear nueva notificación
+            const notificationData = notifications[notificationCounter % notifications.length];
             const notificationEl = document.createElement('div');
             notificationEl.className = 'notification';
+            notificationEl.style.top = `${activeNotifications.length * 110 + 10}px`;
             notificationEl.innerHTML = `
                 <div class="notification-icon ${notificationData.type}">
                     <i class="fab fa-${notificationData.type === 'call' ? 'phone' : notificationData.type}"></i>
@@ -1843,109 +1872,87 @@
                 notificationEl.classList.add('show');
             }, 50);
 
-            // Avanzar al siguiente índice
-            currentNotification++;
+            // Añadir a la lista de notificaciones activas
+            activeNotifications.push(notificationEl);
 
-            // Programar siguiente notificación si no es la última
-            if (currentNotification < notifications.length) {
-                setTimeout(showNextNotification, 2000);
-            }
+            // Avanzar al siguiente índice
+            notificationCounter++;
+
+            // Programar siguiente notificación
+            setTimeout(showNotification, 3000);
         }
 
         // Iniciar el ciclo de notificaciones
-        setTimeout(showNextNotification, 1000);
+        setTimeout(showNotification, 1000);
 
-        // Gráfico 3D de habilidades
-        function init3DSkillsChart() {
-            const container = document.getElementById('skills-3d-chart');
-            if (!container) return;
-
-            // Configuración de la escena
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            container.appendChild(renderer.domElement);
-            
-            // Crear esfera de habilidades
-            const geometry = new THREE.SphereGeometry(5, 32, 32);
-            const material = new THREE.MeshPhongMaterial({
-                color: 0x2563eb,
-                transparent: true,
-                opacity: 0.8,
-                wireframe: false
-            });
-            
-            const sphere = new THREE.Mesh(geometry, material);
-            scene.add(sphere);
-            
-            // Añadir puntos de habilidades
-            const skills = [
-                { name: 'R', level: 0.9, color: 0x276dc1 },
-                { name: 'VBA', level: 0.85, color: 0x7e22ce },
-                { name: 'Python', level: 0.7, color: 0x0ea5e9 },
-                { name: 'SAS', level: 0.8, color: 0x2563eb },
-                { name: 'VaR', level: 0.9, color: 0x10b981 },
-                { name: 'Stress Testing', level: 0.85, color: 0xf59e0b }
+        // Fondo animado de ticker de bolsa
+        function createStockTicker() {
+            const stockTicker = document.getElementById('stock-ticker');
+            const stocks = [
+                { symbol: 'AAPL', price: 178.72, change: 1.24 },
+                { symbol: 'MSFT', price: 407.81, change: 2.36 },
+                { symbol: 'GOOGL', price: 176.52, change: -0.45 },
+                { symbol: 'AMZN', price: 179.61, change: 0.87 },
+                { symbol: 'TSLA', price: 251.52, change: -1.23 },
+                { symbol: 'NVDA', price: 126.57, change: 3.42 },
+                { symbol: 'JPM', price: 198.21, change: 0.67 },
+                { symbol: 'V', price: 274.89, change: -0.32 }
             ];
-            
-            skills.forEach((skill, i) => {
-                const phi = Math.acos(-1 + (2 * i) / skills.length);
-                const theta = Math.sqrt(skills.length * Math.PI) * phi;
+
+            // Crear múltiples elementos de acciones que flotarán
+            for (let i = 0; i < 20; i++) {
+                const stock = stocks[Math.floor(Math.random() * stocks.length)];
+                const stockItem = document.createElement('div');
+                stockItem.className = 'stock-item';
                 
-                const x = 6 * Math.cos(theta) * Math.sin(phi);
-                const y = 6 * Math.sin(theta) * Math.sin(phi);
-                const z = 6 * Math.cos(phi);
+                const changeClass = stock.change >= 0 ? 'change-positive' : 'change-negative';
+                const changeSign = stock.change >= 0 ? '+' : '';
                 
-                // Punto de habilidad
-                const pointGeometry = new THREE.SphereGeometry(0.3, 16, 16);
-                const pointMaterial = new THREE.MeshBasicMaterial({ color: skill.color });
-                const point = new THREE.Mesh(pointGeometry, pointMaterial);
-                point.position.set(x, y, z);
-                scene.add(point);
+                stockItem.innerHTML = `${stock.symbol} $${stock.price.toFixed(2)} <span class="${changeClass}">${changeSign}${stock.change}%</span>`;
                 
-                // Línea conectando el punto con la esfera
-                const lineMaterial = new THREE.LineBasicMaterial({ color: skill.color, transparent: true, opacity: 0.5 });
-                const lineGeometry = new THREE.BufferGeometry().setFromPoints([
-                    new THREE.Vector3(0, 0, 0),
-                    new THREE.Vector3(x, y, z)
-                ]);
-                const line = new THREE.Line(lineGeometry, lineMaterial);
-                scene.add(line);
-            });
-            
-            // Añadir luces
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
-            
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            directionalLight.position.set(5, 5, 5);
-            scene.add(directionalLight);
-            
-            // Configurar cámara
-            camera.position.z = 10;
-            
-            // Controles de órbita
-            const controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.05;
-            controls.rotateSpeed = 0.5;
-            
-            // Animación
-            function animate() {
-                requestAnimationFrame(animate);
-                controls.update();
-                renderer.render(scene, camera);
+                // Posición aleatoria
+                stockItem.style.left = `${Math.random() * 90}%`;
+                stockItem.style.animationDelay = `${Math.random() * 15}s`;
+                stockItem.style.animationDuration = `${15 + Math.random() * 10}s`;
+                
+                stockTicker.appendChild(stockItem);
             }
-            
-            animate();
-            
-            // Ajustar en redimensionamiento
-            window.addEventListener('resize', () => {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        // Gráfico de habilidades con Chart.js
+        function initSkillsChart() {
+            const ctx = document.getElementById('skills-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['R', 'VBA', 'Python', 'SAS', 'VaR', 'Stress Testing', 'Estadística', 'Finanzas'],
+                    datasets: [{
+                        label: 'Nivel de Habilidad',
+                        data: [90, 85, 70, 80, 90, 85, 88, 82],
+                        backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                        borderColor: 'rgba(37, 99, 235, 1)',
+                        pointBackgroundColor: 'rgba(37, 99, 235, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(37, 99, 235, 1)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
             });
         }
 
@@ -1977,81 +1984,36 @@
             document.getElementById('stressResult').textContent = `€ ${stressValue.toFixed(2)}`;
         }
 
-        // Panel de Mercados Financieros
-        function setupMarketPanel() {
-            const tabs = document.querySelectorAll('.market-tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    // Remover clase active de todas las pestañas
-                    tabs.forEach(t => t.classList.remove('active'));
-                    // Añadir clase active a la pestaña clickeada
-                    tab.classList.add('active');
-                    
-                    // Mostrar el contenido correspondiente
-                    const tabName = tab.getAttribute('data-tab');
-                    document.querySelectorAll('.market-data').forEach(content => {
-                        content.style.display = 'none';
-                    });
-                    document.getElementById(`${tabName}-data`).style.display = 'grid';
-                    
-                    // Cargar datos si es necesario
-                    if (document.getElementById(`${tabName}-data`).innerHTML === '') {
-                        loadMarketData(tabName);
-                    }
-                });
-            });
+        // Panel de Mercados Financieros - Modificado (solo acciones, rotación cada 5 segundos)
+        let currentStockIndex = 0;
+        const stocksData = [
+            { symbol: 'AAPL', name: 'Apple Inc.', price: 178.72, change: 1.24 },
+            { symbol: 'MSFT', name: 'Microsoft Corp.', price: 407.81, change: 2.36 },
+            { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 176.52, change: -0.45 },
+            { symbol: 'AMZN', name: 'Amazon.com Inc.', price: 179.61, change: 0.87 },
+            { symbol: 'TSLA', name: 'Tesla Inc.', price: 251.52, change: -1.23 },
+            { symbol: 'NVDA', name: 'NVIDIA Corp.', price: 126.57, change: 3.42 }
+        ];
+
+        function showStockData() {
+            const stockCard = document.getElementById('stock-card');
+            const stock = stocksData[currentStockIndex];
             
-            // Cargar datos iniciales
-            loadMarketData('stocks');
-        }
-        
-        function loadMarketData(type) {
-            const container = document.getElementById(`${type}-data`);
-            container.innerHTML = '<div class="api-loader"><div class="spinner"></div></div>';
+            const changeClass = stock.change >= 0 ? 'change-positive' : 'change-negative';
+            const changeSign = stock.change >= 0 ? '+' : '';
             
-            // Simulación de datos (en un caso real, se conectaría a una API)
-            setTimeout(() => {
-                let data = [];
-                
-                if (type === 'stocks') {
-                    data = [
-                        { symbol: 'AAPL', name: 'Apple Inc.', price: 178.72, change: 1.24 },
-                        { symbol: 'MSFT', name: 'Microsoft Corp.', price: 407.81, change: 2.36 },
-                        { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 176.52, change: -0.45 },
-                        { symbol: 'AMZN', name: 'Amazon.com Inc.', price: 179.61, change: 0.87 }
-                    ];
-                } else if (type === 'indices') {
-                    data = [
-                        { symbol: '^GSPC', name: 'S&P 500', price: 5463.74, change: 0.54 },
-                        { symbol: '^IXIC', name: 'NASDAQ', price: 17688.88, change: 0.72 },
-                        { symbol: '^FTSE', name: 'FTSE 100', price: 8182.69, change: -0.21 },
-                        { symbol: '^STOXX50E', name: 'EURO STOXX 50', price: 4923.41, change: 0.33 }
-                    ];
-                } else if (type === 'forex') {
-                    data = [
-                        { symbol: 'EUR/USD', name: 'Euro/Dólar', price: 1.0702, change: -0.12 },
-                        { symbol: 'GBP/USD', name: 'Libra/Dólar', price: 1.2648, change: 0.05 },
-                        { symbol: 'USD/JPY', name: 'Dólar/Yen', price: 160.87, change: 0.28 },
-                        { symbol: 'USD/CHF', name: 'Dólar/Franco', price: 0.8992, change: -0.07 }
-                    ];
-                }
-                
-                container.innerHTML = '';
-                data.forEach(item => {
-                    const changeClass = item.change >= 0 ? 'change-positive' : 'change-negative';
-                    const changeSign = item.change >= 0 ? '+' : '';
-                    
-                    const card = document.createElement('div');
-                    card.className = 'market-card';
-                    card.innerHTML = `
-                        <div class="market-symbol">${item.symbol}</div>
-                        <div class="market-name">${item.name}</div>
-                        <div class="market-price">${typeof item.price === 'number' ? item.price.toFixed(2) : item.price}</div>
-                        <div class="market-change ${changeClass}">${changeSign}${item.change}%</div>
-                    `;
-                    container.appendChild(card);
-                });
-            }, 1500);
+            stockCard.innerHTML = `
+                <div class="market-symbol">${stock.symbol}</div>
+                <div class="market-name">${stock.name}</div>
+                <div class="market-price">$${stock.price.toFixed(2)}</div>
+                <div class="market-change ${changeClass}">${changeSign}${stock.change}%</div>
+            `;
+            
+            // Avanzar al siguiente índice
+            currentStockIndex = (currentStockIndex + 1) % stocksData.length;
+            
+            // Programar siguiente actualización
+            setTimeout(showStockData, 5000);
         }
 
         // Integración con APIs
@@ -2108,9 +2070,10 @@
 
         // Inicializar componentes cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', () => {
-            init3DSkillsChart();
+            createStockTicker();
+            initSkillsChart();
             setupRiskSimulator();
-            setupMarketPanel();
+            showStockData();
         });
     </script>
 </body>
