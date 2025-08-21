@@ -46,10 +46,33 @@
             padding: 20px;
         }
 
+        /* Botón de volver */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--card-bg);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+        }
+
         header {
             text-align: center;
             margin-bottom: 60px;
-            padding: 40px 20px;
+            padding: 60px 20px 40px;
         }
 
         h1 {
@@ -263,10 +286,35 @@
             z-index: 100;
         }
 
-        /* Responsive */
+        /* Responsive - Optimización para todos los dispositivos */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .station-content {
+                width: 350px;
+            }
+        }
+
         @media (max-width: 900px) {
             .station-content {
-                width: 300px;
+                width: 320px;
+                left: calc(50% + 35px);
+            }
+            
+            .alternate {
+                left: calc(50% - 35px);
             }
         }
 
@@ -280,43 +328,52 @@
             }
             
             .station-content {
-                width: 250px;
+                width: 280px;
                 left: calc(50% + 30px);
+                padding: 20px;
             }
             
             .alternate {
                 left: calc(50% - 30px);
-                transform: translateX(-100%);
+            }
+            
+            .station-title {
+                font-size: 1.3rem;
             }
             
             .legend {
                 flex-direction: column;
                 align-items: center;
                 gap: 15px;
+                padding: 20px;
             }
             
             .legend-item {
                 width: 100%;
                 justify-content: center;
             }
+            
+            .back-button, .theme-toggle {
+                width: 45px;
+                height: 45px;
+            }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 650px) {
             .station-content {
                 position: relative;
                 left: 0;
                 width: 100%;
-                margin: 20px 0;
-                transform: none;
+                margin: 70px 0 30px;
+                transform: none !important;
             }
             
             .station-content.active {
-                transform: none;
+                transform: none !important;
             }
             
             .alternate {
                 left: 0;
-                transform: none;
             }
             
             .metro-line, .line-progress {
@@ -325,6 +382,75 @@
             
             .station {
                 left: 30px;
+            }
+            
+            header {
+                padding: 40px 15px 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .station-content {
+                padding: 18px;
+            }
+            
+            .station-title {
+                font-size: 1.2rem;
+            }
+            
+            .station-type {
+                font-size: 0.8rem;
+            }
+            
+            .station-description, .station-date {
+                font-size: 0.9rem;
+            }
+            
+            .back-button, .theme-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+            
+            .back-button {
+                left: 15px;
+                top: 15px;
+            }
+            
+            .theme-toggle {
+                right: 15px;
+                top: 15px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .station {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .metro-line, .line-progress {
+                left: 25px;
+            }
+            
+            .station {
+                left: 25px;
             }
         }
 
@@ -338,9 +464,49 @@
         .station.active.pulse {
             animation: pulse 2s infinite;
         }
+
+        /* Mejoras de accesibilidad */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .scroll-indicator {
+                animation: none;
+            }
+            
+            .station.active.pulse {
+                animation: none;
+            }
+        }
+
+        /* Modo alto contraste para mejorar accesibilidad */
+        @media (prefers-contrast: high) {
+            :root {
+                --finance-color: #004d00;
+                --programming-color: #000080;
+                --math-color: #804000;
+                --economics-color: #800000;
+            }
+            
+            .station {
+                border-width: 3px;
+            }
+            
+            .station.active {
+                border-width: 5px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Botón para volver a la página principal -->
+    <a href="index.html" class="back-button" aria-label="Volver a la página principal">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
     <div class="container">
         <header>
             <h1>Metro del Conocimiento</h1>
@@ -379,7 +545,7 @@
         </div>
     </div>
     
-    <button class="theme-toggle" id="theme-toggle">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar modo claro/oscuro">
         <i class="fas fa-moon"></i>
     </button>
 
@@ -560,6 +726,7 @@
                 stationEl.className = `station ${station.line}`;
                 stationEl.id = `station-${station.id}`;
                 stationEl.style.top = `${station.position}%`;
+                stationEl.setAttribute('aria-label', `Estación: ${station.name}`);
                 stationsContainer.appendChild(stationEl);
                 
                 // Crear contenido de la estación
@@ -590,7 +757,9 @@
                 return window.pageYOffset + rect.top - window.innerHeight * 0.8;
             });
             
-            window.addEventListener('scroll', () => {
+            // Función para manejar el scroll con throttling para mejor performance
+            let ticking = false;
+            function updateProgress() {
                 const scrollPosition = window.scrollY;
                 const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
                 const scrollPercent = scrollPosition / documentHeight;
@@ -608,7 +777,19 @@
                         contents[index].classList.remove('active');
                     }
                 });
+                
+                ticking = false;
+            }
+            
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateProgress);
+                    ticking = true;
+                }
             });
+
+            // Ejecutar una vez al cargar para posicionamiento inicial
+            updateProgress();
         }
         
         // Toggle de tema claro/oscuro
@@ -646,7 +827,19 @@
             generateMetroMap();
             setupScrollAnimation();
             setupThemeToggle();
+            
+            // Mejorar el rendimiento en dispositivos táctiles
+            if ('ontouchstart' in window) {
+                document.documentElement.style.webkitTapHighlightColor = 'transparent';
+            }
         });
+
+        // Optimizar para dispositivos con menos capacidad
+        if (navigator.deviceMemory < 4) {
+            console.log("Dispositivo con memoria limitada detectado, optimizando...");
+            // Reducir ligeramente las animaciones para dispositivos con poca memoria
+            document.document.style.setProperty('--station-size', '35px');
+        }
     </script>
 </body>
 </html>
