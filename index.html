@@ -8,6 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
     <style>
         :root {
             --primary-color: #2563eb;
@@ -397,6 +402,58 @@
             border-radius: 2px;
         }
 
+        /* Sobre Mí mejorado */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            padding-right: 2rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .about-highlights {
+            margin-top: 2rem;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .about-visual {
+            position: relative;
+            height: 400px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         /* Timeline */
         .timeline {
             position: relative;
@@ -645,6 +702,159 @@
             font-size: 0.8rem;
         }
 
+        /* Gráfico 3D de Habilidades */
+        .skills-3d-container {
+            width: 100%;
+            height: 400px;
+            margin: 2rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        #skills-3d-chart {
+            width: 100%;
+            height: 100%;
+            background: var(--card-bg);
+        }
+
+        /* Simulador de Risk Modeling */
+        .simulator-container {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .simulator-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .control-group input {
+            padding: 0.8rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .simulator-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .result-card {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Panel de Mercados Financieros */
+        .market-panel {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .market-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+        }
+
+        .market-tab {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .market-tab.active {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .market-content {
+            min-height: 300px;
+        }
+
+        .market-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .market-card {
+            background: var(--bg-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .market-symbol {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .market-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .market-change {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .change-positive {
+            background: rgba(34, 197, 94, 0.2);
+            color: rgb(21, 128, 61);
+        }
+
+        .change-negative {
+            background: rgba(239, 68, 68, 0.2);
+            color: rgb(185, 28, 28);
+        }
+
         /* Sección de Integración con APIs */
         .api-section {
             margin-top: 4rem;
@@ -756,13 +966,12 @@
         .notifications-container {
             position: relative;
             height: 500px;
-            overflow: hidden;
+            overflow-y: auto;
+            padding: 10px;
         }
 
         .notification {
-            position: absolute;
-            width: calc(100% - 40px);
-            margin: 0 20px;
+            width: calc(100% - 20px);
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -770,23 +979,17 @@
             padding: 15px;
             display: flex;
             align-items: center;
+            margin-bottom: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid var(--glass-border);
             opacity: 0;
-            transform: translateY(100%);
-            z-index: 1;
+            transform: translateY(20px);
         }
 
-        .notification.active {
+        .notification.show {
             opacity: 1;
             transform: translateY(0);
-            z-index: 2;
-        }
-
-        .notification.hiding {
-            opacity: 0;
-            transform: translateY(-100%);
         }
 
         .notification-icon {
@@ -860,6 +1063,40 @@
             transform: translateY(-3px);
         }
 
+        /* Firma de desarrollo */
+        .dev-signature {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .dev-signature p {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            position: relative;
+            display: inline-block;
+            padding: 0 1rem;
+        }
+
+        .dev-signature p::before,
+        .dev-signature p::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .dev-signature p::before {
+            right: 100%;
+        }
+
+        .dev-signature p::after {
+            left: 100%;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .hero-content h1 {
@@ -868,6 +1105,14 @@
             
             .hero-content p {
                 font-size: 1.3rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-text {
+                padding-right: 0;
             }
         }
 
@@ -952,6 +1197,14 @@
             .avatar-face {
                 font-size: 3.5rem;
             }
+
+            .simulator-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .market-data {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -984,6 +1237,11 @@
             
             .avatar-face {
                 font-size: 2.5rem;
+            }
+
+            .dev-signature p::before,
+            .dev-signature p::after {
+                width: 30px;
             }
         }
     </style>
@@ -1049,39 +1307,50 @@
         </div>
     </section>
 
-    <!-- Sobre Mí -->
+    <!-- Sobre Mí Mejorado -->
     <section id="about">
         <div class="container">
             <h2 class="section-title" data-aos="fade-up">Sobre Mí</h2>
-            <div class="about-content" data-aos="fade-up" data-aos-delay="200">
-                <p>Soy un analista de riesgos en formación con experiencia en BNP Paribas CIB, especializado en modelos cuantitativos de riesgo (VaR, Stress Testing) y su automatización con R/VBA.</p>
-                <p>Mi perfil técnico combina formación estadística/matemática (Máster en Ciencias Actuariales) y económica (Grado en Economía Financiera y Actuarial).</p>
-                <p>Destaco por mis matrículas de honor en áreas clave como Finanzas Corporativas, Procesos Estocásticos y Series Temporales.</p>
-            </div>
-            
-            <!-- Integración con APIs -->
-            <div class="api-section">
-                <h3 class="section-title" data-aos="fade-up">Actividad Reciente</h3>
-                <div class="api-cards">
-                    <div class="api-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="api-icon">
-                            <i class="fab fa-github"></i>
+            <div class="about-container">
+                <div class="about-text" data-aos="fade-right">
+                    <p>Soy un analista de riesgos en formación con experiencia en BNP Paribas CIB, especializado en modelos cuantitativos de riesgo (VaR, Stress Testing) y su automatización con R/VBA.</p>
+                    <p>Mi perfil técnico combina formación estadística/matemática (Máster en Ciencias Actuariales) y económica (Grado en Economía Financiera y Actuarial).</p>
+                    <p>Destaco por mis matrículas de honor en áreas clave como Finanzas Corporativas, Procesos Estocásticos y Series Temporales.</p>
+                    
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <h4>Especialización en Risk Modeling</h4>
+                                <p>Desarrollo de modelos cuantitativos avanzados</p>
+                            </div>
                         </div>
-                        <div class="api-content" id="github-content">
-                            <div class="api-loader">
-                                <div class="spinner"></div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div>
+                                <h4>Automatización de Procesos</h4>
+                                <p>Optimización con R, VBA y Python</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <h4>Excelencia Académica</h4>
+                                <p>5 Matrículas de Honor y promedio de 8.3/10</p>
                             </div>
                         </div>
                     </div>
-                    <div class="api-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="api-icon">
-                            <i class="fab fa-linkedin"></i>
-                        </div>
-                        <div class="api-content" id="linkedin-content">
-                            <div class="api-loader">
-                                <div class="spinner"></div>
-                            </div>
-                        </div>
+                </div>
+                <div class="about-visual" data-aos="fade-left" data-aos-delay="200">
+                    <!-- Gráfico 3D de habilidades -->
+                    <div class="skills-3d-container">
+                        <div id="skills-3d-chart"></div>
                     </div>
                 </div>
             </div>
@@ -1149,6 +1418,46 @@
                         <li class="competency-item"><i class="fas fa-check"></i> Estadística Avanzada</li>
                         <li class="competency-item"><i class="fas fa-check"></i> Finanzas Corporativas</li>
                     </ul>
+                </div>
+            </div>
+
+            <!-- Simulador de Risk Modeling -->
+            <div class="simulator-container" data-aos="fade-up" data-aos-delay="500">
+                <h3 class="section-title">Simulador de Risk Modeling</h3>
+                <div class="simulator-controls">
+                    <div class="control-group">
+                        <label for="initialInvestment">Inversión Inicial (€)</label>
+                        <input type="number" id="initialInvestment" value="10000" min="1000" step="1000">
+                    </div>
+                    <div class="control-group">
+                        <label for="volatility">Volatilidad (%)</label>
+                        <input type="number" id="volatility" value="15" min="5" max="50" step="1">
+                    </div>
+                    <div class="control-group">
+                        <label for="timeHorizon">Horizonte Temporal (días)</label>
+                        <input type="number" id="timeHorizon" value="10" min="1" max="365" step="1">
+                    </div>
+                    <div class="control-group">
+                        <label for="confidenceLevel">Nivel de Confianza (%)</label>
+                        <input type="number" id="confidenceLevel" value="95" min="90" max="99" step="1">
+                    </div>
+                </div>
+                <div class="simulator-results">
+                    <div class="result-card">
+                        <div class="result-label">Value at Risk (VaR)</div>
+                        <div class="result-value" id="varResult">€ 0</div>
+                        <div class="result-label">Pérdida máxima esperada</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Expected Shortfall</div>
+                        <div class="result-value" id="esResult">€ 0</div>
+                        <div class="result-label">Pérdida media en el peor %</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Stress Testing</div>
+                        <div class="result-value" id="stressResult">€ 0</div>
+                        <div class="result-label">Escenario adverso</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1257,6 +1566,27 @@
                     <div class="cert-date">Junio 2022</div>
                 </div>
             </div>
+
+            <!-- Panel de Mercados Financieros -->
+            <div class="market-panel" data-aos="fade-up" data-aos-delay="900">
+                <h3 class="section-title">Mercados Financieros en Tiempo Real</h3>
+                <div class="market-tabs">
+                    <button class="market-tab active" data-tab="stocks">Acciones</button>
+                    <button class="market-tab" data-tab="indices">Índices</button>
+                    <button class="market-tab" data-tab="forex">Divisas</button>
+                </div>
+                <div class="market-content">
+                    <div class="market-data" id="stocks-data">
+                        <!-- Los datos se cargarán mediante JavaScript -->
+                    </div>
+                    <div class="market-data" id="indices-data" style="display: none;">
+                        <!-- Los datos se cargarán mediante JavaScript -->
+                    </div>
+                    <div class="market-data" id="forex-data" style="display: none;">
+                        <!-- Los datos se cargarán mediante JavaScript -->
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1280,6 +1610,35 @@
         </div>
     </section>
 
+    <!-- Actividad Reciente (movida después de Contacto) -->
+    <section id="recent-activity">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Actividad Reciente</h2>
+            <div class="api-cards">
+                <div class="api-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="api-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="api-content" id="github-content">
+                        <div class="api-loader">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="api-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="api-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <div class="api-content" id="linkedin-content">
+                        <div class="api-loader">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1292,6 +1651,11 @@
             <p>&copy; 2024 Javier Torres Rubio. Todos los derechos reservados.</p>
         </div>
     </footer>
+
+    <!-- Firma de desarrollo -->
+    <div class="dev-signature">
+        <p>Website entirely developed by Javier Torres Rubio</p>
+    </div>
 
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -1412,7 +1776,7 @@
             });
         }
 
-        // Sistema de notificaciones para el iPhone
+        // Sistema de notificaciones para el iPhone (acumulativas)
         const notifications = [
             {
                 app: 'LinkedIn',
@@ -1455,18 +1819,8 @@
         let currentNotification = 0;
 
         function showNextNotification() {
-            // Ocultar notificación actual si existe
-            const current = notificationsContainer.querySelector('.notification.active');
-            if (current) {
-                current.classList.remove('active');
-                current.classList.add('hiding');
-                
-                setTimeout(() => {
-                    current.remove();
-                }, 300);
-            }
+            if (currentNotification >= notifications.length) return;
 
-            // Crear nueva notificación
             const notificationData = notifications[currentNotification];
             const notificationEl = document.createElement('div');
             notificationEl.className = 'notification';
@@ -1486,18 +1840,219 @@
             
             // Animar la entrada
             setTimeout(() => {
-                notificationEl.classList.add('active');
+                notificationEl.classList.add('show');
             }, 50);
 
             // Avanzar al siguiente índice
-            currentNotification = (currentNotification + 1) % notifications.length;
+            currentNotification++;
 
-            // Programar siguiente notificación
-            setTimeout(showNextNotification, 4000);
+            // Programar siguiente notificación si no es la última
+            if (currentNotification < notifications.length) {
+                setTimeout(showNextNotification, 2000);
+            }
         }
 
         // Iniciar el ciclo de notificaciones
         setTimeout(showNextNotification, 1000);
+
+        // Gráfico 3D de habilidades
+        function init3DSkillsChart() {
+            const container = document.getElementById('skills-3d-chart');
+            if (!container) return;
+
+            // Configuración de la escena
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            
+            // Crear esfera de habilidades
+            const geometry = new THREE.SphereGeometry(5, 32, 32);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x2563eb,
+                transparent: true,
+                opacity: 0.8,
+                wireframe: false
+            });
+            
+            const sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+            
+            // Añadir puntos de habilidades
+            const skills = [
+                { name: 'R', level: 0.9, color: 0x276dc1 },
+                { name: 'VBA', level: 0.85, color: 0x7e22ce },
+                { name: 'Python', level: 0.7, color: 0x0ea5e9 },
+                { name: 'SAS', level: 0.8, color: 0x2563eb },
+                { name: 'VaR', level: 0.9, color: 0x10b981 },
+                { name: 'Stress Testing', level: 0.85, color: 0xf59e0b }
+            ];
+            
+            skills.forEach((skill, i) => {
+                const phi = Math.acos(-1 + (2 * i) / skills.length);
+                const theta = Math.sqrt(skills.length * Math.PI) * phi;
+                
+                const x = 6 * Math.cos(theta) * Math.sin(phi);
+                const y = 6 * Math.sin(theta) * Math.sin(phi);
+                const z = 6 * Math.cos(phi);
+                
+                // Punto de habilidad
+                const pointGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+                const pointMaterial = new THREE.MeshBasicMaterial({ color: skill.color });
+                const point = new THREE.Mesh(pointGeometry, pointMaterial);
+                point.position.set(x, y, z);
+                scene.add(point);
+                
+                // Línea conectando el punto con la esfera
+                const lineMaterial = new THREE.LineBasicMaterial({ color: skill.color, transparent: true, opacity: 0.5 });
+                const lineGeometry = new THREE.BufferGeometry().setFromPoints([
+                    new THREE.Vector3(0, 0, 0),
+                    new THREE.Vector3(x, y, z)
+                ]);
+                const line = new THREE.Line(lineGeometry, lineMaterial);
+                scene.add(line);
+            });
+            
+            // Añadir luces
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+            
+            // Configurar cámara
+            camera.position.z = 10;
+            
+            // Controles de órbita
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.rotateSpeed = 0.5;
+            
+            // Animación
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Ajustar en redimensionamiento
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        }
+
+        // Simulador de Risk Modeling
+        function setupRiskSimulator() {
+            const inputs = document.querySelectorAll('.simulator-controls input');
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateRiskMetrics);
+            });
+            
+            calculateRiskMetrics();
+        }
+        
+        function calculateRiskMetrics() {
+            const initialInvestment = parseFloat(document.getElementById('initialInvestment').value);
+            const volatility = parseFloat(document.getElementById('volatility').value) / 100;
+            const timeHorizon = parseFloat(document.getElementById('timeHorizon').value);
+            const confidenceLevel = parseFloat(document.getElementById('confidenceLevel').value) / 100;
+            
+            // Cálculo simplificado de métricas de riesgo
+            const zScore = Math.sqrt(-2 * Math.log(1 - confidenceLevel)); // Aproximación
+            
+            const varValue = initialInvestment * volatility * Math.sqrt(timeHorizon/252) * zScore;
+            const esValue = initialInvestment * volatility * Math.sqrt(timeHorizon/252) * (zScore + (Math.exp(-zScore*zScore/2))/(Math.sqrt(2*Math.PI)*(1-confidenceLevel)));
+            const stressValue = initialInvestment * volatility * 2.5; // Escenario de estrés (250% de la volatilidad)
+            
+            document.getElementById('varResult').textContent = `€ ${varValue.toFixed(2)}`;
+            document.getElementById('esResult').textContent = `€ ${esValue.toFixed(2)}`;
+            document.getElementById('stressResult').textContent = `€ ${stressValue.toFixed(2)}`;
+        }
+
+        // Panel de Mercados Financieros
+        function setupMarketPanel() {
+            const tabs = document.querySelectorAll('.market-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remover clase active de todas las pestañas
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Añadir clase active a la pestaña clickeada
+                    tab.classList.add('active');
+                    
+                    // Mostrar el contenido correspondiente
+                    const tabName = tab.getAttribute('data-tab');
+                    document.querySelectorAll('.market-data').forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    document.getElementById(`${tabName}-data`).style.display = 'grid';
+                    
+                    // Cargar datos si es necesario
+                    if (document.getElementById(`${tabName}-data`).innerHTML === '') {
+                        loadMarketData(tabName);
+                    }
+                });
+            });
+            
+            // Cargar datos iniciales
+            loadMarketData('stocks');
+        }
+        
+        function loadMarketData(type) {
+            const container = document.getElementById(`${type}-data`);
+            container.innerHTML = '<div class="api-loader"><div class="spinner"></div></div>';
+            
+            // Simulación de datos (en un caso real, se conectaría a una API)
+            setTimeout(() => {
+                let data = [];
+                
+                if (type === 'stocks') {
+                    data = [
+                        { symbol: 'AAPL', name: 'Apple Inc.', price: 178.72, change: 1.24 },
+                        { symbol: 'MSFT', name: 'Microsoft Corp.', price: 407.81, change: 2.36 },
+                        { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 176.52, change: -0.45 },
+                        { symbol: 'AMZN', name: 'Amazon.com Inc.', price: 179.61, change: 0.87 }
+                    ];
+                } else if (type === 'indices') {
+                    data = [
+                        { symbol: '^GSPC', name: 'S&P 500', price: 5463.74, change: 0.54 },
+                        { symbol: '^IXIC', name: 'NASDAQ', price: 17688.88, change: 0.72 },
+                        { symbol: '^FTSE', name: 'FTSE 100', price: 8182.69, change: -0.21 },
+                        { symbol: '^STOXX50E', name: 'EURO STOXX 50', price: 4923.41, change: 0.33 }
+                    ];
+                } else if (type === 'forex') {
+                    data = [
+                        { symbol: 'EUR/USD', name: 'Euro/Dólar', price: 1.0702, change: -0.12 },
+                        { symbol: 'GBP/USD', name: 'Libra/Dólar', price: 1.2648, change: 0.05 },
+                        { symbol: 'USD/JPY', name: 'Dólar/Yen', price: 160.87, change: 0.28 },
+                        { symbol: 'USD/CHF', name: 'Dólar/Franco', price: 0.8992, change: -0.07 }
+                    ];
+                }
+                
+                container.innerHTML = '';
+                data.forEach(item => {
+                    const changeClass = item.change >= 0 ? 'change-positive' : 'change-negative';
+                    const changeSign = item.change >= 0 ? '+' : '';
+                    
+                    const card = document.createElement('div');
+                    card.className = 'market-card';
+                    card.innerHTML = `
+                        <div class="market-symbol">${item.symbol}</div>
+                        <div class="market-name">${item.name}</div>
+                        <div class="market-price">${typeof item.price === 'number' ? item.price.toFixed(2) : item.price}</div>
+                        <div class="market-change ${changeClass}">${changeSign}${item.change}%</div>
+                    `;
+                    container.appendChild(card);
+                });
+            }, 1500);
+        }
 
         // Integración con APIs
         // GitHub API
@@ -1550,6 +2105,13 @@
                 </a>
             </div>
         `;
+
+        // Inicializar componentes cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            init3DSkillsChart();
+            setupRiskSimulator();
+            setupMarketPanel();
+        });
     </script>
 </body>
 </html>
