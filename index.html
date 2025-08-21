@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javier Torres Rubio | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #0ea5e9;
+            --accent-color: #7e22ce;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: var(--light-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        section {
+            padding: 5rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Header y Navegación */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px var(--glass-shadow);
+            padding: 1rem 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        #hero {
+            position: relative;
+            padding-top: 8rem;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .animated-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #0f172a, #1e293b, #334155, #475569);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--glass-border);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Secciones generales */
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 10px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px var(--glass-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--glass-shadow);
+        }
+
+        .timeline-date {
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--light-color);
+        }
+
+        .timeline-desc {
+            color: #cbd5e1;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary-color);
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        /* Mapa de Competencias */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .skill-radar {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            box-shadow: 0 4px 30px var(--glass-shadow);
+        }
+
+        .skill-item {
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .skill-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            width: 0;
+            transition: width 1.5s ease;
+        }
+
+        /* Sección Contacto - iPhone */
+        .iphone-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .iphone {
+            width: 320px;
+            height: 660px;
+            background: #1e293b;
+            border-radius: 40px;
+            padding: 15px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5),
+                        0 0 0 4px #4b5563,
+                        0 0 0 6px #1f2937,
+                        0 0 0 8px #4b5563;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 1s ease;
+        }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dynamic-island {
+            width: 120px;
+            height: 35px;
+            background: #020617;
+            border-radius: 20px;
+            margin: 10px auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .notifications {
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .notification {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
+        }
+
+        .notification:hover {
+            transform: translateX(5px);
+            background: rgba(37, 99, 235, 0.2);
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .linkedin { background: #0A66C2; }
+        .email { background: #EA4335; }
+        .call { background: #34A853; }
+        .whatsapp { background: #25D366; }
+
+        .notification-content {
+            flex-grow: 1;
+        }
+
+        .notification-app {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 3px;
+        }
+
+        .notification-text {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        .notification-time {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 3px;
+        }
+
+        .iphone-footer {
+            padding: 15px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--light-color);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 21px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header y Navegación -->
+    <header>
+        <nav>
+            <a href="#" class="logo">J<span>TR</span></a>
+            <ul class="nav-links">
+                <li><a href="#hero">Inicio</a></li>
+                <li><a href="#about">Sobre Mí</a></li>
+                <li><a href="#timeline">Trayectoria</a></li>
+                <li><a href="#skills">Competencias</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-bg">
+            <div class="animated-bg"></div>
+        </div>
+        <div class="container hero-content">
+            <div class="hero-img">
+                <i class="fas fa-user"></i>
+            </div>
+            <h1>Javier Torres Rubio</h1>
+            <p>Analista de Riesgos Cuantitativos &amp; Desarrollador de Modelos Financieros</p>
+            <a href="#contact" class="btn">Contactar</a>
+        </div>
+    </section>
+
+    <!-- Sobre Mí -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">Sobre Mí</h2>
+            <div class="about-content" style="background: var(--glass-bg); backdrop-filter: blur(10px); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                <p style="margin-bottom: 1.5rem; font-size: 1.2rem;">Soy un analista de riesgos en formación con experiencia en BNP Paribas CIB, especializado en modelos cuantitativos de riesgo (VaR, Stress Testing) y su automatización con R/VBA.</p>
+                <p style="margin-bottom: 1.5rem; font-size: 1.2rem;">Mi perfil técnico combina formación estadística/matemática (Máster en Ciencias Actuariales) y económica (Grado en Economía Financiera y Actuarial).</p>
+                <p style="font-size: 1.2rem;">Destaco por mis matrículas de honor en áreas clave como Finanzas Corporativas, Procesos Estocásticos y Series Temporales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section id="timeline">
+        <div class="container">
+            <h2 class="section-title">Mi Trayectoria</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024 - 2026 (Previsto)</span>
+                        <h3 class="timeline-title">Máster en Ciencias Actuariales y Financieras</h3>
+                        <p class="timeline-desc">Universidad Carlos III de Madrid. Formación avanzada en valoración de derivados, técnicas estadísticas y procesos estocásticos.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">Mar 2024 – Ago 2024</span>
+                        <h3 class="timeline-title">Analista - BNP Paribas CIB</h3>
+                        <p class="timeline-desc">Gestión de operaciones bursátiles, compliance, verificación de pagos de dividendos y monitoreo del índice Euribor.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2020 – 2024</span>
+                        <h3 class="timeline-title">Grado en Economía Financiera y Actuarial</h3>
+                        <p class="timeline-desc">Universidad Rey Juan Carlos. Nota media: 8.3/10. 5 Matrículas de Honor y 13 asignaturas calificadas con Sobresaliente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mapa de Competencias -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Competencias</h2>
+            <div class="skills-container">
+                <div class="skill-radar">
+                    <!-- Aquí iría el gráfico de radar (se implementaría con JavaScript) -->
+                    <canvas id="radarChart" width="400" height="400"></canvas>
+                </div>
+                <div class="skill-bars">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>Análisis de Riesgo (VaR, Stress Testing)</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>Programación en R</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>VBA</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>Estadística Avanzada</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="88%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>Finanzas Cuantitativas</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="92%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto - iPhone -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <div class="iphone-container">
+                <div class="iphone">
+                    <div class="iphone-screen">
+                        <div class="dynamic-island"></div>
+                        <div class="notifications">
+                            <div class="notification" onclick="window.open('https://linkedin.com/in/javier-torres-rubio', '_blank')">
+                                <div class="notification-icon linkedin">
+                                    <i class="fab fa-linkedin"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <div class="notification-app">LinkedIn</div>
+                                    <div class="notification-text">Nueva oportunidad laboral en análisis de riesgos</div>
+                                    <div class="notification-time">Ahora</div>
+                                </div>
+                            </div>
+                            <div class="notification" onclick="location.href='mailto:javiertorresrubio9@gmail.com'">
+                                <div class="notification-icon email">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <div class="notification-app">Email</div>
+                                    <div class="notification-text">Consulta sobre tu perfil profesional</div>
+                                    <div class="notification-time">Hace 5 min</div>
+                                </div>
+                            </div>
+                            <div class="notification" onclick="location.href='tel:+34654609650'">
+                                <div class="notification-icon call">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <div class="notification-app">Llamada</div>
+                                    <div class="notification-text">Reclutador - BNP Paribas</div>
+                                    <div class="notification-time">Hace 20 min</div>
+                                </div>
+                            </div>
+                            <div class="notification" onclick="window.open('https://wa.me/34654609650', '_blank')">
+                                <div class="notification-icon whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <div class="notification-app">WhatsApp</div>
+                                    <div class="notification-text">Hola Javier, me interesa tu perfil...</div>
+                                    <div class="notification-time">Ayer</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iphone-footer">
+                            Desliza para más opciones de contacto
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://linkedin.com/in/javier-torres-rubio" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:javiertorresrubio9@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="tel:+34654609650"><i class="fas fa-phone"></i></a>
+                <a href="https://wa.me/34654609650" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p>&copy; 2024 Javier Torres Rubio. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Efecto de scroll para el header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Animación de aparición al hacer scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animar barras de habilidades
+                    if (entry.target.classList.contains('skill-item')) {
+                        const progressBar = entry.target.querySelector('.skill-progress');
+                        setTimeout(() => {
+                            progressBar.style.width = progressBar.getAttribute('data-width');
+                        }, 200);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos de la timeline
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Observar elementos de habilidades
+        document.querySelectorAll('.skill-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Gráfico de radar de competencias
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('radarChart');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                
+                // Datos para el gráfico de radar
+                const data = {
+                    labels: ['Análisis de Riesgo', 'Programación R', 'VBA', 'Estadística', 'Finanzas Cuantitativas', 'Machine Learning'],
+                    datasets: [{
+                        label: 'Nivel de Competencia',
+                        data: [90, 85, 80, 88, 92, 75],
+                        backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                        borderColor: 'rgba(37, 99, 235, 0.8)',
+                        pointBackgroundColor: 'rgba(37, 99, 235, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(37, 99, 235, 1)'
+                    }]
+                };
+
+                // Opciones del gráfico
+                const options = {
+                    scale: {
+                        ticks: {
+                            beginAtZero: true,
+                            max: 100,
+                            stepSize: 20
+                        },
+                        angleLines: {
+                            color: 'rgba(255, 255, 255, 0.2)'
+                        },
+                        gridLines: {
+                            color: 'rgba(255, 255, 255, 0.2)'
+                        },
+                        pointLabels: {
+                            fontColor: '#f8fafc',
+                            fontSize: 12
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            fontColor: '#f8fafc'
+                        }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutQuart'
+                    }
+                };
+
+                // Dibujar el gráfico de radar
+                const radarChart = new Chart(ctx, {
+                    type: 'radar',
+                    data: data,
+                    options: options
+                });
+            }
+        });
+
+        // Efecto de rotación 3D para el iPhone
+        const iphone = document.querySelector('.iphone');
+        document.addEventListener('mousemove', (e) => {
+            if (iphone) {
+                const x = (window.innerWidth / 2 - e.clientX) / 25;
+                const y = (window.innerHeight / 2 - e.clientY) / 25;
+                iphone.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            }
+        });
+    </script>
+</body>
+</html>
