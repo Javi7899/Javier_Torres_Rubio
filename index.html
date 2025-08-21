@@ -293,6 +293,8 @@
             font-size: 14px;
             white-space: nowrap;
             animation: floatStock 20s linear infinite;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
         @keyframes floatStock {
@@ -433,13 +435,15 @@
         /* Sobre Mí mejorado */
         .about-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 3rem;
             align-items: center;
         }
 
         .about-text {
-            padding-right: 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .about-text p {
@@ -449,37 +453,51 @@
 
         .about-highlights {
             margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
 
         .highlight-item {
             display: flex;
+            flex-direction: column;
             align-items: center;
+            text-align: center;
             margin-bottom: 1rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         .highlight-icon {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
+            margin-bottom: 1rem;
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
         }
 
-        .about-visual {
-            position: relative;
-            height: 400px;
-            background: var(--card-bg);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .highlight-item h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .highlight-item p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            opacity: 0.8;
         }
 
         /* Nueva Sección de Proyectos Destacados (reemplaza Competencias) */
@@ -738,18 +756,56 @@
             font-size: 0.8rem;
         }
 
-        /* Simulador de Risk Modeling */
+        /* Simulador de Risk Modeling - Mejorado y colapsable */
         .simulator-container {
             background: var(--card-bg);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 1.5rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin: 2rem 0;
+            margin: 2rem auto;
+            max-width: 800px;
+            transition: all 0.3s ease;
+        }
+
+        .simulator-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .simulator-header h3 {
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .simulator-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .simulator-toggle.rotated {
+            transform: rotate(180deg);
+        }
+
+        .simulator-content {
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            max-height: 0;
+        }
+
+        .simulator-content.expanded {
+            max-height: 1000px;
         }
 
         .simulator-controls {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -797,7 +853,7 @@
             opacity: 0.9;
         }
 
-        /* Panel de Mercados Financieros - Modificado */
+        /* Panel de Mercados Financieros - Mejorado con animación */
         .market-panel {
             background: var(--card-bg);
             border-radius: 16px;
@@ -822,6 +878,14 @@
             width: 100%;
             max-width: 400px;
             margin: 0 auto;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .market-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .market-symbol {
@@ -840,6 +904,15 @@
             font-size: 2rem;
             font-weight: 700;
             margin: 0.5rem 0;
+            transition: color 0.5s ease;
+        }
+
+        .price-up {
+            color: #22c55e;
+        }
+
+        .price-down {
+            color: #ef4444;
         }
 
         .market-change {
@@ -1116,14 +1189,6 @@
             .hero-content p {
                 font-size: 1.3rem;
             }
-
-            .about-container {
-                grid-template-columns: 1fr;
-            }
-
-            .about-text {
-                padding-right: 0;
-            }
         }
 
         @media (max-width: 768px) {
@@ -1209,6 +1274,10 @@
             }
 
             .simulator-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .about-highlights {
                 grid-template-columns: 1fr;
             }
         }
@@ -1319,44 +1388,34 @@
         <div class="container">
             <h2 class="section-title" data-aos="fade-up">Sobre Mí</h2>
             <div class="about-container">
-                <div class="about-text" data-aos="fade-right">
+                <div class="about-text" data-aos="fade-up">
                     <p>Soy un analista de riesgos en formación con experiencia en BNP Paribas CIB, especializado en modelos cuantitativos de riesgo (VaR, Stress Testing) y su automatización con R/VBA.</p>
                     <p>Mi perfil técnico combina formación estadística/matemática (Máster en Ciencias Actuariales) y económica (Grado en Economía Financiera y Actuarial).</p>
                     <p>Destaco por mis matrículas de honor en áreas clave como Finanzas Corporativas, Procesos Estocásticos y Series Temporales.</p>
                     
                     <div class="about-highlights">
-                        <div class="highlight-item">
+                        <div class="highlight-item" data-aos="fade-up" data-aos-delay="200">
                             <div class="highlight-icon">
                                 <i class="fas fa-chart-line"></i>
                             </div>
-                            <div>
-                                <h4>Especialización en Risk Modeling</h4>
-                                <p>Desarrollo de modelos cuantitativos avanzados</p>
-                            </div>
+                            <h4>Especialización en Risk Modeling</h4>
+                            <p>Desarrollo de modelos cuantitativos avanzados</p>
                         </div>
-                        <div class="highlight-item">
+                        <div class="highlight-item" data-aos="fade-up" data-aos-delay="300">
                             <div class="highlight-icon">
                                 <i class="fas fa-code"></i>
                             </div>
-                            <div>
-                                <h4>Automatización de Procesos</h4>
-                                <p>Optimización con R, VBA y Python</p>
-                            </div>
+                            <h4>Automatización de Procesos</h4>
+                            <p>Optimización con R, VBA y Python</p>
                         </div>
-                        <div class="highlight-item">
+                        <div class="highlight-item" data-aos="fade-up" data-aos-delay="400">
                             <div class="highlight-icon">
                                 <i class="fas fa-graduation-cap"></i>
                             </div>
-                            <div>
-                                <h4>Excelencia Académica</h4>
-                                <p>5 Matrículas de Honor y promedio de 8.3/10</p>
-                            </div>
+                            <h4>Excelencia Académica</h4>
+                            <p>5 Matrículas de Honor y promedio de 8.3/10</p>
                         </div>
                     </div>
-                </div>
-                <div class="about-visual" data-aos="fade-left" data-aos-delay="200">
-                    <!-- Gráfico de habilidades con Chart.js -->
-                    <canvas id="skills-chart" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
@@ -1435,42 +1494,49 @@
                 </div>
             </div>
 
-            <!-- Simulador de Risk Modeling -->
+            <!-- Simulador de Risk Modeling - Mejorado y colapsable -->
             <div class="simulator-container" data-aos="fade-up" data-aos-delay="500">
-                <h3 class="section-title">Simulador de Risk Modeling</h3>
-                <div class="simulator-controls">
-                    <div class="control-group">
-                        <label for="initialInvestment">Inversión Inicial (€)</label>
-                        <input type="number" id="initialInvestment" value="10000" min="1000" step="1000">
-                    </div>
-                    <div class="control-group">
-                        <label for="volatility">Volatilidad (%)</label>
-                        <input type="number" id="volatility" value="15" min="5" max="50" step="1">
-                    </div>
-                    <div class="control-group">
-                        <label for="timeHorizon">Horizonte Temporal (días)</label>
-                        <input type="number" id="timeHorizon" value="10" min="1" max="365" step="1">
-                    </div>
-                    <div class="control-group">
-                        <label for="confidenceLevel">Nivel de Confianza (%)</label>
-                        <input type="number" id="confidenceLevel" value="95" min="90" max="99" step="1">
-                    </div>
+                <div class="simulator-header" id="simulator-toggle">
+                    <h3>Simulador de Risk Modeling</h3>
+                    <button class="simulator-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
                 </div>
-                <div class="simulator-results">
-                    <div class="result-card">
-                        <div class="result-label">Value at Risk (VaR)</div>
-                        <div class="result-value" id="varResult">€ 0</div>
-                        <div class="result-label">Pérdida máxima esperada</div>
+                <div class="simulator-content" id="simulator-content">
+                    <div class="simulator-controls">
+                        <div class="control-group">
+                            <label for="initialInvestment">Inversión Inicial (€)</label>
+                            <input type="number" id="initialInvestment" value="10000" min="1000" step="1000">
+                        </div>
+                        <div class="control-group">
+                            <label for="volatility">Volatilidad (%)</label>
+                            <input type="number" id="volatility" value="15" min="5" max="50" step="1">
+                        </div>
+                        <div class="control-group">
+                            <label for="timeHorizon">Horizonte Temporal (días)</label>
+                            <input type="number" id="timeHorizon" value="10" min="1" max="365" step="1">
+                        </div>
+                        <div class="control-group">
+                            <label for="confidenceLevel">Nivel de Confianza (%)</label>
+                            <input type="number" id="confidenceLevel" value="95" min="90" max="99" step="1">
+                        </div>
                     </div>
-                    <div class="result-card">
-                        <div class="result-label">Expected Shortfall</div>
-                        <div class="result-value" id="esResult">€ 0</div>
-                        <div class="result-label">Pérdida media en el peor %</div>
-                    </div>
-                    <div class="result-card">
-                        <div class="result-label">Stress Testing</div>
-                        <div class="result-value" id="stressResult">€ 0</div>
-                        <div class="result-label">Escenario adverso</div>
+                    <div class="simulator-results">
+                        <div class="result-card">
+                            <div class="result-label">Value at Risk (VaR)</div>
+                            <div class="result-value" id="varResult">€ 0</div>
+                            <div class="result-label">Pérdida máxima esperada</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-label">Expected Shortfall</div>
+                            <div class="result-value" id="esResult">€ 0</div>
+                            <div class="result-label">Pérdida media en el peor %</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-label">Stress Testing</div>
+                            <div class="result-value" id="stressResult">€ 0</div>
+                            <div class="result-label">Escenario adverso</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1581,7 +1647,7 @@
                 </div>
             </div>
 
-            <!-- Panel de Mercados Financieros - Modificado -->
+            <!-- Panel de Mercados Financieros - Mejorado con animación -->
             <div class="market-panel" data-aos="fade-up" data-aos-delay="900">
                 <h3 class="section-title">Mercado de Acciones en Tiempo Real</h3>
                 <div class="market-content">
@@ -1758,9 +1824,6 @@
                         downloadCvBtnLarge.href = 'Javier_Torres_Rubio_CV_ES.pdf';
                     }
                 }
-                
-                // Aquí puedes agregar la lógica para cambiar todo el contenido del sitio al idioma seleccionado
-                // Por ahora solo cambia el CV para descargar
             });
         });
         
@@ -1885,7 +1948,7 @@
         // Iniciar el ciclo de notificaciones
         setTimeout(showNotification, 1000);
 
-        // Fondo animado de ticker de bolsa
+        // Fondo animado de ticker de bolsa con mejoras
         function createStockTicker() {
             const stockTicker = document.getElementById('stock-ticker');
             const stocks = [
@@ -1916,54 +1979,41 @@
                 stockItem.style.animationDuration = `${15 + Math.random() * 10}s`;
                 
                 stockTicker.appendChild(stockItem);
+                
+                // Hacer que aparezcan gradualmente
+                setTimeout(() => {
+                    stockItem.style.opacity = '1';
+                }, 100 + i * 200);
             }
         }
 
-        // Gráfico de habilidades con Chart.js
-        function initSkillsChart() {
-            const ctx = document.getElementById('skills-chart').getContext('2d');
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['R', 'VBA', 'Python', 'SAS', 'VaR', 'Stress Testing', 'Estadística', 'Finanzas'],
-                    datasets: [{
-                        label: 'Nivel de Habilidad',
-                        data: [90, 85, 70, 80, 90, 85, 88, 82],
-                        backgroundColor: 'rgba(37, 99, 235, 0.2)',
-                        borderColor: 'rgba(37, 99, 235, 1)',
-                        pointBackgroundColor: 'rgba(37, 99, 235, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(37, 99, 235, 1)'
-                    }]
-                },
-                options: {
-                    scales: {
-                        r: {
-                            angleLines: {
-                                display: true
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 100
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
+        // Simulador de Risk Modeling colapsable
+        function setupRiskSimulator() {
+            const simulatorToggle = document.getElementById('simulator-toggle');
+            const simulatorContent = document.getElementById('simulator-content');
+            const toggleIcon = simulatorToggle.querySelector('.simulator-toggle i');
+            
+            simulatorToggle.addEventListener('click', () => {
+                simulatorContent.classList.toggle('expanded');
+                toggleIcon.classList.toggle('fa-chevron-down');
+                toggleIcon.classList.toggle('fa-chevron-up');
+                simulatorToggle.querySelector('.simulator-toggle').classList.toggle('rotated');
+                
+                // Si se expande, calcular métricas
+                if (simulatorContent.classList.contains('expanded')) {
+                    calculateRiskMetrics();
                 }
             });
-        }
-
-        // Simulador de Risk Modeling
-        function setupRiskSimulator() {
+            
             const inputs = document.querySelectorAll('.simulator-controls input');
             inputs.forEach(input => {
                 input.addEventListener('input', calculateRiskMetrics);
             });
             
-            calculateRiskMetrics();
+            // Calcular métricas iniciales si está expandido
+            if (simulatorContent.classList.contains('expanded')) {
+                calculateRiskMetrics();
+            }
         }
         
         function calculateRiskMetrics() {
@@ -1984,7 +2034,7 @@
             document.getElementById('stressResult').textContent = `€ ${stressValue.toFixed(2)}`;
         }
 
-        // Panel de Mercados Financieros - Modificado (solo acciones, rotación cada 5 segundos)
+        // Panel de Mercados Financieros - Mejorado con animación
         let currentStockIndex = 0;
         const stocksData = [
             { symbol: 'AAPL', name: 'Apple Inc.', price: 178.72, change: 1.24 },
@@ -1995,25 +2045,39 @@
             { symbol: 'NVDA', name: 'NVIDIA Corp.', price: 126.57, change: 3.42 }
         ];
 
+        let previousPrice = 0;
+
         function showStockData() {
             const stockCard = document.getElementById('stock-card');
             const stock = stocksData[currentStockIndex];
             
             const changeClass = stock.change >= 0 ? 'change-positive' : 'change-negative';
             const changeSign = stock.change >= 0 ? '+' : '';
+            const priceClass = stock.price > previousPrice ? 'price-up' : (stock.price < previousPrice ? 'price-down' : '');
             
             stockCard.innerHTML = `
                 <div class="market-symbol">${stock.symbol}</div>
                 <div class="market-name">${stock.name}</div>
-                <div class="market-price">$${stock.price.toFixed(2)}</div>
+                <div class="market-price ${priceClass}">$${stock.price.toFixed(2)}</div>
                 <div class="market-change ${changeClass}">${changeSign}${stock.change}%</div>
             `;
+            
+            // Guardar el precio actual para la próxima comparación
+            previousPrice = stock.price;
+            
+            // Animar la entrada
+            setTimeout(() => {
+                stockCard.classList.add('visible');
+            }, 50);
             
             // Avanzar al siguiente índice
             currentStockIndex = (currentStockIndex + 1) % stocksData.length;
             
             // Programar siguiente actualización
-            setTimeout(showStockData, 5000);
+            setTimeout(() => {
+                stockCard.classList.remove('visible');
+                setTimeout(showStockData, 500);
+            }, 4500);
         }
 
         // Integración con APIs
@@ -2071,7 +2135,6 @@
         // Inicializar componentes cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', () => {
             createStockTicker();
-            initSkillsChart();
             setupRiskSimulator();
             showStockData();
         });
