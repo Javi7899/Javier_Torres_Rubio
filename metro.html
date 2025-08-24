@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metro del Conocimiento - Javier Torres Rubio</title>
+    <title>Metro del Conocimiento 3D - Javier Torres Rubio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -17,6 +17,7 @@
             --card-bg: #ffffff;
             --line-width: 8px;
             --station-size: 40px;
+            --zig-zag-offset: 200px; /* Controla la amplitud del zig zag */
         }
 
         [data-theme="dark"] {
@@ -54,15 +55,16 @@
             transition: background-color 0.3s, color 0.3s;
             min-height: 100vh;
             overflow-x: hidden;
+            perspective: 1000px; /* Perspectiva para efectos 3D */
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* NUEVO Botón de volver - Estilo moderno con esquinas redondeadas */
+        /* Botón de volver */
         .back-button {
             position: fixed;
             top: 20px;
@@ -137,12 +139,11 @@
             margin-bottom: 100px;
         }
 
+        /* Línea del metro en zig zag */
         .metro-line {
             position: absolute;
             width: var(--line-width);
             background: linear-gradient(to bottom, #ccc, #ccc);
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
             height: 100%;
             left: 50%;
             transform: translateX(-50%);
@@ -153,7 +154,6 @@
         .line-progress {
             background: linear-gradient(to bottom, var(--finance-color), var(--finance-color));
             background-size: 100% 0%;
-            background-repeat: no-repeat;
             position: absolute;
             width: var(--line-width);
             height: 100%;
@@ -169,17 +169,15 @@
             height: 100%;
         }
 
-        /* MODIFICADO: Estaciones posicionadas entre los boxes */
+        /* Estaciones posicionadas en zig zag */
         .station {
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
             width: var(--station-size);
             height: var(--station-size);
             border-radius: 50%;
             background-color: var(--card-bg);
             border: 4px solid #ccc;
-            z-index: 30; /* Aumentado para que esté por encima de todo */
+            z-index: 30;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -191,7 +189,7 @@
 
         .station.active {
             border-width: 6px;
-            transform: translateX(-50%) scale(1.2);
+            transform: scale(1.2);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
@@ -200,23 +198,26 @@
         .station.math.active { border-color: var(--math-color); background-color: var(--math-color); }
         .station.economics.active { border-color: var(--economics-color); background-color: var(--economics-color); }
 
+        /* Contenido de estaciones con efecto 3D */
         .station-content {
             position: absolute;
-            left: calc(50% + 50px);
             width: 400px;
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 25px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             opacity: 0;
-            transform: translateX(20px);
+            transform: translateX(20px) rotateY(10deg);
             transition: all 0.5s ease;
             z-index: 20;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
         }
 
         .station-content.active {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateX(0) rotateY(0deg);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         .station-content.finance { border-left: 5px solid var(--finance-color); }
@@ -256,15 +257,6 @@
             font-style: italic;
         }
 
-        .alternate {
-            left: calc(50% - 50px);
-            transform: translateX(-100%);
-        }
-
-        .alternate.active {
-            transform: translateX(-100%);
-        }
-
         /* Leyenda */
         .legend {
             display: flex;
@@ -276,6 +268,8 @@
             background-color: var(--card-bg);
             border-radius: 16px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
+            transform: translateZ(10px);
         }
 
         .legend-item {
@@ -333,16 +327,13 @@
 
         .station.active.pulse {
             animation: pulse 2s infinite;
-            z-index: 35; /* Aumentado para que esté por encima de todo */
+            z-index: 35;
         }
 
-        /* MODIFICADO: Ajuste para posicionar círculos entre boxes */
-        .station-content {
-            margin-top: 60px; /* Espacio para el círculo encima */
-        }
-
-        .station {
-            top: calc(var(--position) * 1% - 30px); /* Posicionado entre boxes */
+        /* Efecto 3D para el header */
+        .header-3d {
+            transform-style: preserve-3d;
+            transform: translateZ(20px);
         }
 
         /* Responsive */
@@ -358,22 +349,25 @@
             .subtitle {
                 font-size: 1.2rem;
             }
+            
+            :root {
+                --zig-zag-offset: 150px;
+            }
         }
 
         @media (max-width: 992px) {
             .station-content {
                 width: 350px;
             }
+            
+            :root {
+                --zig-zag-offset: 120px;
+            }
         }
 
         @media (max-width: 900px) {
             .station-content {
                 width: 320px;
-                left: calc(50% + 45px);
-            }
-            
-            .alternate {
-                left: calc(50% - 45px);
             }
             
             .back-button .button-text {
@@ -383,6 +377,10 @@
             .back-button {
                 width: 52px;
                 padding: 0;
+            }
+            
+            :root {
+                --zig-zag-offset: 100px;
             }
         }
 
@@ -397,12 +395,7 @@
             
             .station-content {
                 width: 280px;
-                left: calc(50% + 40px);
                 padding: 20px;
-            }
-            
-            .alternate {
-                left: calc(50% - 40px);
             }
             
             .station-title {
@@ -425,12 +418,15 @@
                 width: 45px;
                 height: 45px;
             }
+            
+            :root {
+                --zig-zag-offset: 80px;
+            }
         }
 
         @media (max-width: 650px) {
             .station-content {
                 position: relative;
-                left: 0;
                 width: 100%;
                 margin: 70px 0 30px;
                 transform: none !important;
@@ -440,18 +436,6 @@
                 transform: none !important;
             }
             
-            .alternate {
-                left: 0;
-            }
-            
-            .metro-line, .line-progress {
-                left: 30px;
-            }
-            
-            .station {
-                left: 30px;
-            }
-            
             header {
                 padding: 40px 15px 30px;
             }
@@ -459,6 +443,10 @@
             .station.active.pulse {
                 animation: pulse 3s infinite;
                 box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.3);
+            }
+            
+            :root {
+                --zig-zag-offset: 0px;
             }
         }
 
@@ -523,14 +511,6 @@
                 height: 35px;
             }
             
-            .metro-line, .line-progress {
-                left: 25px;
-            }
-            
-            .station {
-                left: 25px;
-            }
-            
             .station.active.pulse {
                 animation: none;
                 box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
@@ -560,6 +540,10 @@
             .theme-toggle:hover {
                 transform: none;
             }
+            
+            .station-content {
+                transform: none !important;
+            }
         }
 
         /* Modo alto contraste */
@@ -587,16 +571,16 @@
     </style>
 </head>
 <body>
-    <!-- NUEVO Botón de volver con diseño mejorado -->
+    <!-- Botón de volver -->
     <a href="index.html" class="back-button" aria-label="Volver a la página principal">
         <i class="fas fa-arrow-left"></i>
         <span class="button-text">Volver al Portfolio</span>
     </a>
 
     <div class="container">
-        <header>
-            <h1>Metro del Conocimiento</h1>
-            <p class="subtitle">Desplázate para explorar mi trayectoria formativa y profesional</p>
+        <header class="header-3d">
+            <h1>Metro del Conocimiento 3D</h1>
+            <p class="subtitle">Desplázate para explorar mi trayectoria formativa y profesional con efectos 3D</p>
             <div class="scroll-indicator">
                 <i class="fas fa-chevron-down"></i>
             </div>
@@ -654,8 +638,7 @@
                 date: "2023",
                 type: "Educación",
                 line: "economics",
-                position: 10,
-                alternate: true
+                position: 10
             },
             {
                 id: "programming-1",
@@ -673,8 +656,7 @@
                 date: "2023",
                 type: "Educación",
                 line: "math",
-                position: 20,
-                alternate: true
+                position: 20
             },
             {
                 id: "finance-2",
@@ -692,8 +674,7 @@
                 date: "Competencia avanzada",
                 type: "Habilidad",
                 line: "programming",
-                position: 30,
-                alternate: true
+                position: 30
             },
             {
                 id: "economics-2",
@@ -711,8 +692,7 @@
                 date: "2023",
                 type: "Educación",
                 line: "math",
-                position: 40,
-                alternate: true
+                position: 40
             },
             {
                 id: "finance-3",
@@ -730,8 +710,7 @@
                 date: "Competencia intermedia",
                 type: "Habilidad",
                 line: "programming",
-                position: 50,
-                alternate: true
+                position: 50
             },
             {
                 id: "economics-3",
@@ -749,8 +728,7 @@
                 date: "2022",
                 type: "Educación",
                 line: "math",
-                position: 60,
-                alternate: true
+                position: 60
             },
             {
                 id: "finance-4",
@@ -768,8 +746,7 @@
                 date: "Certificación SAS",
                 type: "Certificación",
                 line: "programming",
-                position: 70,
-                alternate: true
+                position: 70
             },
             {
                 id: "economics-4",
@@ -787,8 +764,7 @@
                 date: "Proyecto destacado",
                 type: "Habilidad",
                 line: "math",
-                position: 80,
-                alternate: true
+                position: 80
             },
             {
                 id: "finance-5",
@@ -801,26 +777,32 @@
             }
         ];
 
-        // Generar el mapa del metro
+        // Generar el mapa del metro con zig zag
         function generateMetroMap() {
             const stationsContainer = document.getElementById('stations-container');
             
             // Crear estaciones
-            metroData.forEach(station => {
+            metroData.forEach((station, index) => {
+                // Determinar la posición lateral (zig zag)
+                const isLeft = index % 2 === 0;
+                const offset = isLeft ? -1 : 1;
+                const leftPosition = `calc(50% + ${offset * getZigZagOffset()}px)`;
+                
                 // Crear estación
                 const stationEl = document.createElement('div');
                 stationEl.className = `station ${station.line}`;
                 stationEl.id = `station-${station.id}`;
-                stationEl.style.setProperty('--position', station.position);
-                stationEl.style.top = `calc(${station.position}% - 30px)`; // Posicionado entre boxes
+                stationEl.style.top = `${station.position}%`;
+                stationEl.style.left = leftPosition;
                 stationEl.setAttribute('aria-label', `Estación: ${station.name}`);
                 stationsContainer.appendChild(stationEl);
                 
-                // Crear contenido de la estación
+                // Crear contenido de la estación (en el lado opuesto)
                 const contentEl = document.createElement('div');
-                contentEl.className = `station-content ${station.line} ${station.alternate ? 'alternate' : ''}`;
+                contentEl.className = `station-content ${station.line}`;
                 contentEl.id = `content-${station.id}`;
                 contentEl.style.top = `${station.position}%`;
+                contentEl.style.left = isLeft ? `calc(50% + ${getZigZagOffset() + 50}px)` : `calc(50% - ${getZigZagOffset() + 450}px)`;
                 contentEl.innerHTML = `
                     <h3 class="station-title">${station.name}</h3>
                     <div class="station-type ${station.line}">${station.type}</div>
@@ -829,13 +811,85 @@
                 `;
                 stationsContainer.appendChild(contentEl);
             });
+            
+            // Dibujar la línea en zig zag
+            drawZigZagLine();
+        }
+        
+        // Dibujar la línea del metro en zig zag
+        function drawZigZagLine() {
+            const line = document.querySelector('.metro-line');
+            const progressLine = document.querySelector('.line-progress');
+            
+            // Crear SVG para la línea en zig zag
+            const svgNS = "http://www.w3.org/2000/svg";
+            const svg = document.createElementNS(svgNS, "svg");
+            svg.setAttribute("width", "100%");
+            svg.setAttribute("height", "100%");
+            svg.style.position = "absolute";
+            svg.style.top = "0";
+            svg.style.left = "0";
+            svg.style.zIndex = "1";
+            
+            const progressSvg = document.createElementNS(svgNS, "svg");
+            progressSvg.setAttribute("width", "100%");
+            progressSvg.setAttribute("height", "100%");
+            progressSvg.style.position = "absolute";
+            progressSvg.style.top = "0";
+            progressSvg.style.left = "0";
+            progressSvg.style.zIndex = "2";
+            
+            // Calcular puntos para el zig zag
+            const points = [];
+            const progressPoints = [];
+            const centerX = 50; // 50% del ancho
+            const offset = getZigZagOffset() / window.innerWidth * 100; // Convertir a porcentaje
+            
+            metroData.forEach((station, index) => {
+                const isLeft = index % 2 === 0;
+                const x = isLeft ? centerX - offset : centerX + offset;
+                points.push(`${x},${station.position}`);
+                progressPoints.push(`${x},${station.position}`);
+            });
+            
+            // Crear línea en zig zag
+            const polyline = document.createElementNS(svgNS, "polyline");
+            polyline.setAttribute("points", points.join(" "));
+            polyline.setAttribute("fill", "none");
+            polyline.setAttribute("stroke", "#ccc");
+            polyline.setAttribute("stroke-width", "8");
+            polyline.setAttribute("stroke-linecap", "round");
+            polyline.setAttribute("stroke-linejoin", "round");
+            svg.appendChild(polyline);
+            
+            // Crear línea de progreso en zig zag
+            const progressPolyline = document.createElementNS(svgNS, "polyline");
+            progressPolyline.setAttribute("points", progressPoints.join(" "));
+            progressPolyline.setAttribute("fill", "none");
+            progressPolyline.setAttribute("stroke", "var(--finance-color)");
+            progressPolyline.setAttribute("stroke-width", "8");
+            progressPolyline.setAttribute("stroke-linecap", "round");
+            progressPolyline.setAttribute("stroke-linejoin", "round");
+            progressPolyline.setAttribute("stroke-dasharray", "1000");
+            progressPolyline.setAttribute("stroke-dashoffset", "1000");
+            progressPolyline.id = "progress-polyline";
+            progressSvg.appendChild(progressPolyline);
+            
+            // Reemplazar las líneas originales
+            line.replaceWith(svg);
+            progressLine.replaceWith(progressSvg);
+        }
+        
+        // Obtener el offset del zig zag según el tamaño de la pantalla
+        function getZigZagOffset() {
+            return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--zig-zag-offset'));
         }
         
         // Controlar animación de scroll
         function setupScrollAnimation() {
-            const progressLine = document.getElementById('line-progress');
             const stations = document.querySelectorAll('.station');
             const contents = document.querySelectorAll('.station-content');
+            const progressPolyline = document.getElementById('progress-polyline');
             
             // Calcular puntos de activación
             const activationPoints = metroData.map(station => {
@@ -852,7 +906,10 @@
                 const scrollPercent = scrollPosition / documentHeight;
                 
                 // Actualizar progreso de la línea
-                progressLine.style.backgroundSize = `100% ${scrollPercent * 100}%`;
+                if (progressPolyline) {
+                    const dashoffset = 1000 - (scrollPercent * 1000);
+                    progressPolyline.style.strokeDashoffset = dashoffset;
+                }
                 
                 // Activar estaciones según scroll
                 activationPoints.forEach((point, index) => {
