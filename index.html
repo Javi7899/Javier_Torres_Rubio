@@ -63,9 +63,10 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
+            padding: 0 15px;
         }
 
-        /* Header y Navegación */
+        /* Header y Navegación - Mejoras responsive */
         header {
             position: fixed;
             top: 0;
@@ -88,6 +89,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .logo {
@@ -97,6 +99,7 @@
             text-decoration: none;
             display: flex;
             align-items: center;
+            z-index: 1002;
         }
 
         .logo span {
@@ -106,6 +109,7 @@
         .nav-links {
             display: flex;
             list-style: none;
+            transition: all 0.3s ease;
         }
 
         .nav-links li {
@@ -118,6 +122,7 @@
             font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
+            white-space: nowrap;
         }
 
         .nav-links a:hover {
@@ -143,6 +148,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            z-index: 1002;
         }
 
         .theme-toggle {
@@ -156,7 +162,7 @@
             justify-content: center;
         }
 
-        /* Menú Hamburguesa */
+        /* Menú Hamburguesa - Mejorado */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -165,6 +171,8 @@
             height: 21px;
             cursor: pointer;
             z-index: 1001;
+            background: transparent;
+            border: none;
         }
 
         .hamburger span {
@@ -187,7 +195,7 @@
             transform: translateY(-9px) rotate(-45deg);
         }
 
-        /* Hero Section - Modificado */
+        /* Hero Section - Mejoras responsive */
         #hero {
             position: relative;
             padding-top: 8rem;
@@ -256,9 +264,10 @@
             align-items: center;
             text-align: center;
             z-index: 1;
+            padding: 0 15px;
         }
 
-        /* Avatar 3D con iniciales JTR */
+        /* Avatar 3D con iniciales JTR - Mejoras responsive */
         .avatar-3d {
             width: 200px;
             height: 200px;
@@ -304,6 +313,7 @@
             margin-bottom: 1rem;
             color: white;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
         }
 
         .hero-content p {
@@ -311,6 +321,7 @@
             max-width: 700px;
             margin-bottom: 2rem;
             color: rgba(255, 255, 255, 0.9);
+            line-height: 1.4;
         }
 
         .hero-buttons {
@@ -356,6 +367,7 @@
             margin-bottom: 3rem;
             text-align: center;
             position: relative;
+            line-height: 1.2;
         }
 
         .section-title::after {
@@ -370,7 +382,7 @@
             border-radius: 2px;
         }
 
-        /* Sobre Mí mejorado */
+        /* Sobre Mí mejorado - Responsive */
         .about-container {
             display: grid;
             grid-template-columns: 1fr;
@@ -387,6 +399,7 @@
         .about-text p {
             margin-bottom: 1.5rem;
             font-size: 1.1rem;
+            line-height: 1.6;
         }
 
         .about-highlights {
@@ -430,15 +443,17 @@
         .highlight-item h4 {
             margin-bottom: 0.5rem;
             color: var(--text-color);
+            line-height: 1.3;
         }
 
         .highlight-item p {
             margin-bottom: 0;
             font-size: 0.95rem;
             opacity: 0.8;
+            line-height: 1.4;
         }
 
-        /* Nueva Sección de Proyectos Destacados (reemplaza Competencias) */
+        /* Nueva Sección de Proyectos Destacados - Responsive */
         .projects-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -458,6 +473,7 @@
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
         .project-card:hover {
@@ -476,6 +492,7 @@
             font-size: 1.3rem;
             margin-bottom: 0.5rem;
             color: var(--text-color);
+            line-height: 1.3;
         }
 
         .project-desc {
@@ -483,6 +500,7 @@
             opacity: 0.8;
             margin-bottom: 1rem;
             flex-grow: 1;
+            line-height: 1.5;
         }
 
         .project-tech {
@@ -500,7 +518,7 @@
             font-size: 0.8rem;
         }
 
-        /* Timeline */
+        /* Timeline - Mejoras responsive */
         .timeline {
             position: relative;
             max-width: 900px;
@@ -560,11 +578,13 @@
             font-size: 1.3rem;
             margin-bottom: 10px;
             color: var(--text-color);
+            line-height: 1.3;
         }
 
         .timeline-desc {
             color: var(--text-color);
             opacity: 0.8;
+            line-height: 1.5;
         }
 
         .timeline-item::after {
@@ -587,7 +607,7 @@
             left: -10px;
         }
 
-        /* Sección de Reconocimientos */
+        /* Sección de Reconocimientos - Responsive */
         .awards-container {
             max-width: 900px;
             margin: 0 auto;
@@ -614,6 +634,7 @@
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
             color: var(--text-color);
+            line-height: 1.3;
         }
 
         .award-issuer {
@@ -633,9 +654,10 @@
             color: var(--text-color);
             opacity: 0.8;
             font-size: 0.95rem;
+            line-height: 1.5;
         }
 
-        /* Sección de Certificaciones */
+        /* Sección de Certificaciones - Responsive */
         .certs-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -653,6 +675,7 @@
             padding: 1.5rem;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            height: 100%;
         }
 
         .cert-item:hover {
@@ -664,6 +687,7 @@
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
             color: var(--text-color);
+            line-height: 1.3;
         }
 
         .cert-issuer {
@@ -694,7 +718,7 @@
             font-size: 0.8rem;
         }
 
-        /* Simulador de Risk Modeling - Mejorado y colapsable */
+        /* Simulador de Risk Modeling - Mejorado y colapsable - Responsive */
         .simulator-container {
             background: var(--card-bg);
             border-radius: 16px;
@@ -716,6 +740,7 @@
         .simulator-header h3 {
             margin: 0;
             color: var(--text-color);
+            line-height: 1.3;
         }
 
         .simulator-toggle {
@@ -791,7 +816,7 @@
             opacity: 0.9;
         }
 
-        /* Panel de Mercados Financieros - Mejorado con animación */
+        /* Panel de Mercados Financieros - Mejorado con animación - Responsive */
         .market-panel {
             background: var(--card-bg);
             border-radius: 16px;
@@ -870,7 +895,7 @@
             color: rgb(185, 28, 28);
         }
 
-        /* Sección de Integración con APIs */
+        /* Sección de Integración con APIs - Responsive */
         .api-section {
             margin-top: 4rem;
         }
@@ -892,6 +917,7 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             text-align: center;
+            height: 100%;
         }
 
         .api-card:hover {
@@ -933,7 +959,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Sección Contacto - iPhone */
+        /* Sección Contacto - iPhone - Responsive */
         .iphone-container {
             display: flex;
             justify-content: center;
@@ -1044,6 +1070,7 @@
         .notification-text {
             font-size: 0.85rem;
             color: #cbd5e1;
+            line-height: 1.4;
         }
 
         .notification-time {
@@ -1059,7 +1086,7 @@
             font-size: 0.8rem;
         }
 
-        /* Footer */
+        /* Footer - Responsive */
         footer {
             background: var(--dark-color);
             padding: 2rem;
@@ -1071,6 +1098,7 @@
             justify-content: center;
             gap: 1.5rem;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .social-links a {
@@ -1118,7 +1146,30 @@
             left: 100%;
         }
 
-        /* Responsive */
+        /* Mejoras de accesibilidad */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Enfoque para elementos interactivos */
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Responsive - Media Queries mejoradas */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 30px;
+            }
+        }
+
         @media (max-width: 1024px) {
             .hero-content h1 {
                 font-size: 3rem;
@@ -1127,9 +1178,13 @@
             .hero-content p {
                 font-size: 1.3rem;
             }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .timeline::after {
                 left: 31px;
             }
@@ -1147,6 +1202,20 @@
             .timeline-item:nth-child(odd)::after,
             .timeline-item:nth-child(even)::after {
                 left: 21px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            header.scrolled {
+                padding: 0.8rem 1.5rem;
             }
 
             .hero-content h1 {
@@ -1210,13 +1279,39 @@
             .about-highlights {
                 grid-template-columns: 1fr;
             }
+
+            .iphone {
+                width: 280px;
+                height: 580px;
+            }
+
+            .notification {
+                padding: 12px;
+            }
+
+            .notification-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+                margin-right: 12px;
+            }
+
+            .notifications-container {
+                height: 420px;
+            }
+
+            .iphone-footer {
+                padding: 10px;
+                font-size: 0.7rem;
+            }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 576px) {
             section {
-                padding: 4rem 1rem;
+                padding: 3rem 1rem;
+                min-height: auto;
             }
-            
+
             .hero-content h1 {
                 font-size: 2rem;
             }
@@ -1228,6 +1323,7 @@
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
+                width: 100%;
             }
             
             .btn {
@@ -1244,9 +1340,139 @@
                 font-size: 2.5rem;
             }
 
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+
+            .section-title::after {
+                width: 60px;
+                height: 3px;
+                bottom: -8px;
+            }
+
             .dev-signature p::before,
             .dev-signature p::after {
                 width: 30px;
+            }
+
+            .simulator-results {
+                grid-template-columns: 1fr;
+            }
+
+            .result-card {
+                padding: 1rem;
+            }
+
+            .result-value {
+                font-size: 1.5rem;
+            }
+
+            .api-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .iphone {
+                width: 250px;
+                height: 520px;
+                border-radius: 30px;
+            }
+
+            .iphone-screen {
+                border-radius: 25px;
+            }
+
+            .dynamic-island {
+                width: 100px;
+                height: 30px;
+            }
+
+            .notifications-container {
+                height: 380px;
+            }
+
+            .notification {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .notification-icon {
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+
+            .notification-content {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .projects-container,
+            .certs-container {
+                grid-template-columns: 1fr;
+            }
+
+            .iphone {
+                width: 220px;
+                height: 460px;
+            }
+
+            .notifications-container {
+                height: 330px;
+            }
+
+            .notification-app {
+                font-size: 0.8rem;
+            }
+
+            .notification-text {
+                font-size: 0.75rem;
+            }
+
+            .notification-time {
+                font-size: 0.65rem;
+            }
+        }
+
+        /* Orientación horizontal en móviles */
+        @media (max-height: 600px) and (orientation: landscape) {
+            section {
+                min-height: auto;
+                padding: 3rem 1rem;
+            }
+
+            #hero {
+                padding-top: 6rem;
+                min-height: 100vh;
+            }
+
+            .hero-content {
+                padding: 2rem 0;
+            }
+
+            .avatar-3d {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 1rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+                margin-bottom: 1rem;
             }
         }
     </style>
@@ -1256,11 +1482,11 @@
     <header>
         <nav>
             <a href="#" class="logo">J<span>TR</span></a>
-            <div class="hamburger">
+            <button class="hamburger" aria-label="Menú de navegación">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
             <ul class="nav-links">
                 <li><a href="#hero">Inicio</a></li>
                 <li><a href="#about">Sobre Mí</a></li>
@@ -1271,7 +1497,7 @@
                 <li><a href="#contact">Contacto</a></li>
             </ul>
             <div class="header-controls">
-                <button class="theme-toggle" id="theme-toggle">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar modo claro/oscuro">
                     <i class="fas fa-moon"></i>
                 </button>
             </div>
@@ -1624,10 +1850,10 @@
     <footer>
         <div class="container">
             <div class="social-links">
-                <a href="https://linkedin.com/in/javier-torres-rubio" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="mailto:javiertorresrubio9@gmail.com"><i class="fas fa-envelope"></i></a>
-                <a href="tel:+34654609650"><i class="fas fa-phone"></i></a>
-                <a href="https://wa.me/34654609650" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://linkedin.com/in/javier-torres-rubio" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:javiertorresrubio9@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                <a href="tel:+34654609650" aria-label="Teléfono"><i class="fas fa-phone"></i></a>
+                <a href="https://wa.me/34654609650" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             </div>
             <p>&copy; 2025 JTR. Todos los derechos reservados.</p>
         </div>
@@ -1665,6 +1891,13 @@
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
+            
+            // Prevenir scroll del body cuando el menú está abierto
+            if (navLinks.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         });
 
         // Cerrar menú al hacer clic en un enlace
@@ -1672,6 +1905,7 @@
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navLinks.classList.remove('active');
+                document.body.style.overflow = 'auto';
             });
         });
 
@@ -1704,15 +1938,6 @@
             }
         });
                 
-
-        
-        // Cerrar dropdown al hacer clic fuera
-        document.addEventListener('click', (e) => {
-            if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
-                languageDropdown.classList.remove('show');
-            }
-        });
-
         // Efecto de rotación 3D para el iPhone
         const iphone = document.querySelector('.iphone');
         if (iphone) {
