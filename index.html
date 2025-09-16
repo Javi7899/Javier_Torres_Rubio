@@ -156,68 +156,6 @@
             justify-content: center;
         }
 
-        .language-selector {
-            position: relative;
-        }
-
-        .language-btn {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .language-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--card-bg);
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            display: none;
-            z-index: 1000;
-        }
-
-        .language-dropdown.show {
-            display: block;
-        }
-
-        .language-option {
-            padding: 8px 12px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .language-option:hover {
-            background: rgba(37, 99, 235, 0.1);
-        }
-
-        .download-cv {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .download-cv:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
-        }
-
         /* Menú Hamburguesa */
         .hamburger {
             display: none;
@@ -1256,14 +1194,6 @@
                 gap: 10px;
             }
 
-            .download-cv span {
-                display: none;
-            }
-
-            .download-cv {
-                padding: 8px 12px;
-            }
-
             .avatar-3d {
                 width: 150px;
                 height: 150px;
@@ -1344,19 +1274,6 @@
                 <button class="theme-toggle" id="theme-toggle">
                     <i class="fas fa-moon"></i>
                 </button>
-                <div class="language-selector">
-                    <button class="language-btn">
-                        <i class="fas fa-globe"></i> ES
-                    </button>
-                    <div class="language-dropdown" id="language-dropdown">
-                        <div class="language-option" data-lang="es">Español</div>
-                        <div class="language-option" data-lang="en">English</div>
-                    </div>
-                </div>
-                <a href="Javier_Torres_Rubio_CV_ES.pdf" class="download-cv" download>
-                    <i class="fas fa-download"></i>
-                    <span>CV</span>
-                </a>
             </div>
         </nav>
     </header>
@@ -1376,9 +1293,6 @@
             <p data-aos="fade-up" data-aos-delay="300">Analista de Riesgos Cuantitativos &amp; Desarrollador de Modelos Financieros</p>
             <div class="hero-buttons" data-aos="fade-up" data-aos-delay="400">
                 <a href="#contact" class="btn">Contactar</a>
-                <a href="Javier_Torres_Rubio_CV_ES.pdf" class="btn btn-outline" download>
-                    <i class="fas fa-download"></i> Descargar CV
-                </a>
             </div>
         </div>
     </section>
@@ -1789,39 +1703,8 @@
                 localStorage.setItem('theme', 'dark');
             }
         });
+                
 
-        // Selector de idioma
-        const languageBtn = document.querySelector('.language-btn');
-        const languageDropdown = document.getElementById('language-dropdown');
-        const downloadCvBtn = document.querySelector('.download-cv');
-        const downloadCvBtnLarge = document.querySelector('.hero-buttons .btn-outline');
-        
-        languageBtn.addEventListener('click', () => {
-            languageDropdown.classList.toggle('show');
-        });
-        
-        document.querySelectorAll('.language-option').forEach(option => {
-            option.addEventListener('click', () => {
-                const lang = option.getAttribute('data-lang');
-                languageDropdown.classList.remove('show');
-                
-                // Cambiar el texto del botón
-                languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${lang.toUpperCase()}`;
-                
-                // Cambiar el CV para descargar según el idioma
-                if (lang === 'en') {
-                    downloadCvBtn.href = 'Javier_Torres_Rubio_CV_ENG.pdf';
-                    if (downloadCvBtnLarge) {
-                        downloadCvBtnLarge.href = 'Javier_Torres_Rubio_CV_ENG.pdf';
-                    }
-                } else {
-                    downloadCvBtn.href = 'Javier_Torres_Rubio_CV_ES.pdf';
-                    if (downloadCvBtnLarge) {
-                        downloadCvBtnLarge.href = 'Javier_Torres_Rubio_CV_ES.pdf';
-                    }
-                }
-            });
-        });
         
         // Cerrar dropdown al hacer clic fuera
         document.addEventListener('click', (e) => {
